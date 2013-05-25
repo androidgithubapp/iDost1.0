@@ -31,7 +31,7 @@
             android:label="@string/title_activity_contact" >
         </activity>
         
-        <service android:name="com.example.idost.service.CurAddPolAddiDostService" />
+        <service android:name="com.example.idost.service.CurrentAddressService" />
         <service android:name="com.example.idost.service.MessagingService" />
     </application>
 

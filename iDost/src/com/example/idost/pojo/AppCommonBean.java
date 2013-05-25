@@ -1,8 +1,10 @@
 package com.example.idost.pojo;
 
-import java.util.List;
-
 import android.content.Context;
+
+import com.example.idost.receiver.ResponseCurrentAddReceiver;
+import com.example.idost.receiver.SmsDeliverIdostReceiver;
+import com.example.idost.receiver.SmsSendIdostReceiver;
 
 public class AppCommonBean {
 	public static Context mContext;
@@ -10,12 +12,11 @@ public class AppCommonBean {
 	public static String API_KEY = "AIzaSyASgX9DKn-wabZjEZiMigQRoCAH4QIttKE";
 	
 	
+	public static ResponseCurrentAddReceiver receiver;
+	public static SmsSendIdostReceiver smssendreceiver;
+	public static SmsDeliverIdostReceiver smsdeliverreceiver;
 	
-	public static CurrentAddressBean currentAddressBean;
-	public static List<AllPoliceStationInfoBean> allPoliceStationInfoBean;
-	public static NearestPoliceInfoBean nearestPoliceInfoBean;
-	public static ContactBean cntcBean;
+	public static String commonErrMsg;
 	
 	
-
 }

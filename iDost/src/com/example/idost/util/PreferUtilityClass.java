@@ -19,7 +19,7 @@ public static void StoreContact(Context context, String name,String Phone)
 {
 	ContactBean.showMsg="";
 	if ((ContactBean.ContactMap == null)
-			|| (!ContactBean.ContactMap.containsKey(name))) 
+			|| (!ContactBean.ContactMap.containsKey(Phone))) 
 	{
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -60,12 +60,23 @@ public static void UpdateContact(Context context, ContactBean conobj)
 	edit.commit();
 }
 
-public static void UpdateContactDetails(Context context,ArrayList<String> contactList)
+public static void UpdateContactDetails(Context context)
 {
+
 	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	Editor edit = prefs.edit();
-	edit.putString(context.getString(R.string.CONVAL),StoreContactData(contactList));
+	edit.putString(context.getString(R.string.CONVAL),StoreContactData(GetContactListFromMap()));
 	edit.commit();
+}
+
+private static ArrayList<String> GetContactListFromMap()
+{
+	ArrayList<String> conList=new ArrayList<String>();
+	for(String key: ContactBean.ContactMap.keySet())
+	{
+		conList.add(key+":"+ContactBean.ContactMap.get(key));
+	}
+	return conList;
 }
 
 private static String StoreContactData(ArrayList<String> contactList)

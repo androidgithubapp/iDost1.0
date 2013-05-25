@@ -2,38 +2,34 @@ package com.example.idost.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
 
-public class ShowAlertUtilityClass {
-	Context mContext;
-	
-	public ShowAlertUtilityClass(Context context)
-	{
-		this.mContext = context;
-	}
+import com.example.idost.constant.AppCommonConstantsClass;
+import com.example.idost.pojo.AppCommonBean;
 
+public class ShowAlertUtilityClass {
 	
-	public void showSettingsAlert(String alertClassification){
+	
+	public static void showSettingsAlert(String alertClassification){
 		AlertDialog.Builder alertDialog = null;
-		if("NetOrGpsEnable".equalsIgnoreCase(alertClassification))
+		if(AppCommonConstantsClass.NET_GPS_NOT_ENABLED.equalsIgnoreCase(alertClassification))
 		{
-			alertDialog = new AlertDialog.Builder(mContext);
+			alertDialog = new AlertDialog.Builder(AppCommonBean.mContext);
 			 
 	        // Setting Dialog Title
-	        alertDialog.setTitle("GPS/Network settings");
+	        alertDialog.setTitle(AppCommonConstantsClass.ENB_PRO_SETTING);
 	 
 	        // Setting Dialog Message
-	        alertDialog.setMessage("GPS/Network is not enabled. Do you want to go to settings menu ?");
+	        alertDialog.setMessage(AppCommonConstantsClass.USR_SETTING_MSG);
 	 
 	        // On pressing Settings button
 	        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
 	        	
 	            public void onClick(DialogInterface dialog,int which) {
 	                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-	                mContext.startActivity(intent);
+	                AppCommonBean.mContext.startActivity(intent);
 	            }
 	            
 	        });
@@ -42,7 +38,7 @@ public class ShowAlertUtilityClass {
 	    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int which) {
 	        dialog.cancel();
-	        ((Activity) mContext).finish();
+	        ((Activity) AppCommonBean.mContext).finish();
 	        }
 	    });
 

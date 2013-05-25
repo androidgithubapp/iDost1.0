@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.idost.R;
+import com.example.idost.pojo.ContactBean;
 import com.example.idost.util.PreferUtilityClass;
 
 public class ContactActivity extends Activity {
@@ -48,15 +49,15 @@ public class ContactActivity extends Activity {
 		else
 		{
 			//ConList=new ArrayList<String>();
-			for(int i=0;i<this.contactView.getCount();i++)
+			for(int i=0;i<=this.contactView.getCount();i++)
 			{
 				if(this.contactView.isItemChecked(i))
 				{
-					ConList.remove(this.contactView.getItemAtPosition(i));
+					ContactBean.ContactMap.remove(this.contactView.getItemAtPosition(i).toString().split(":")[1]);
 				}
 			}
 			PreferUtilityClass.delData(ContactActivity.this);
-			PreferUtilityClass.UpdateContactDetails(ContactActivity.this, ConList);
+			PreferUtilityClass.UpdateContactDetails(ContactActivity.this);
 			LoadContactList();
 		}
 		
@@ -103,6 +104,7 @@ public class ContactActivity extends Activity {
 			{
 			this.txtvw.setText("");
 			this.btndel.setEnabled(true);
+			
 			contactView.setAdapter(new ArrayAdapter<String>(ContactActivity.this,
 					android.R.layout.simple_list_item_multiple_choice,condata));
 			

@@ -9,6 +9,8 @@ import android.telephony.SmsManager;
 
 import com.example.idost.pojo.AppCommonBean;
 import com.example.idost.pojo.ContactBean;
+import com.example.idost.pojo.CurrentAddressBean;
+import com.example.idost.pojo.NearestPoliceInfoBean;
 import com.example.idost.receiver.SmsDeliverIdostReceiver;
 import com.example.idost.receiver.SmsSendIdostReceiver;
 
@@ -20,48 +22,51 @@ public class MessagingService extends IntentService {
 	}
 
 
-	private static final int DELAY = 30000; //time in milli sec
-	private static final String TAG = "MessagingService";
 	boolean running = false;
-	
-	
-
 	
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		// TODO Auto-generated method stub
 		
 
-		String currentAddress = CurAddPolAddiDostService.appCommonBean.currentAddressBean.addressLine + "," +  
-				CurAddPolAddiDostService.appCommonBean.currentAddressBean.locality;
+		String currentAddress = CurrentAddressBean.addressLine + "," +  
+				CurrentAddressBean.locality;
 		
-		String nearestPolInfo = "CONTACT:" + CurAddPolAddiDostService.appCommonBean.nearestPoliceInfoBean.policeNm + "," +
-				CurAddPolAddiDostService.appCommonBean.nearestPoliceInfoBean.policeVicinity; 
-				if(CurAddPolAddiDostService.appCommonBean.nearestPoliceInfoBean.policeIntFrmattedPhNo!=null)
+		String nearestPolInfo = "CONTACT:" + NearestPoliceInfoBean.policeNm + "," +
+				NearestPoliceInfoBean.policeVicinity; 
+				if(NearestPoliceInfoBean.policeIntFrmattedPhNo!=null)
 				{
 					nearestPolInfo = nearestPolInfo + "PH:" +
-							CurAddPolAddiDostService.appCommonBean.nearestPoliceInfoBean.policeIntFrmattedPhNo;
+							NearestPoliceInfoBean.policeIntFrmattedPhNo;
 				}
 		
-		final String msgContent = "HELP!" + 
-									"I am at:"+currentAddress + "/" +  
+		final String msgContent = "HELP! I am in great danger" + 
+									"now I am at:"+currentAddress + " - " +" please contact the police "+  
 									nearestPolInfo;
-		//final String msgContent = "Pls help,I am at : ";
-
-		PendingIntent piSent = PendingIntent.getBroadcast(AppCommonBean.mContext, 0, new Intent(SmsSendIdostReceiver.SMS_SEND_RESP), 0);
-		PendingIntent piDeliver = PendingIntent.getBroadcast(AppCommonBean.mContext, 0, new Intent(SmsDeliverIdostReceiver.SMS_DELIVER_RESP), 0);
+				
+		
 		SmsManager smsManager = SmsManager.getDefault();
+		ArrayList<String> smsParts =smsManager.divideMessage(msgContent);
+		int numSmsParts = smsParts.size();
+		
+		ArrayList<PendingIntent> piSent = new ArrayList<PendingIntent>();
+		ArrayList<PendingIntent> piDeliver = new ArrayList<PendingIntent>();
+		
+		for (int index = 0; index < numSmsParts; index++) {
+			piSent.add(PendingIntent.getBroadcast(AppCommonBean.mContext, 0, new Intent(SmsSendIdostReceiver.SMS_SEND_RESP), 0));
+			piDeliver.add(PendingIntent.getBroadcast(AppCommonBean.mContext, 0, new Intent(SmsDeliverIdostReceiver.SMS_DELIVER_RESP), 0));
+			}
+		
+		
 		if(ContactBean.ContactMap!=null)
 		{
 			for(String phoneNo : ContactBean.ContactMap.keySet())
 			{
 				try{
-					smsManager.sendTextMessage(phoneNo, null, msgContent, piSent, piDeliver);
-					//ArrayList<String> parts = smsManager.divideMessage(msgContent);
-					//smsManager.sendMultipartTextMessage(phoneNo, null, parts, null, null);
-					Thread.sleep(2000);
+					smsManager.sendMultipartTextMessage(phoneNo, null, smsParts, piSent, piDeliver);
 					
-					}catch(Exception e)
+					Thread.sleep(2000);
+				}catch(Exception e)
 					{
 						e.printStackTrace();
 					}catch(Error err)

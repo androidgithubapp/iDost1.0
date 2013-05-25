@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import com.example.idost.pojo.AllPoliceStationInfoBean;
 import com.example.idost.pojo.AppCommonBean;
+import com.example.idost.pojo.NearestPoliceInfoBean;
 import com.example.idost.util.AppCommonExceptionClass;
 import com.example.idost.util.AppReflectUtilityClass;
 import com.example.idost.util.GetUrlUtilityClass;
@@ -17,46 +18,69 @@ import com.example.idost.util.GetUrlUtilityClass;
 
 public class GetAllPoliceStationInfoClass {
 
-     public static List<AllPoliceStationInfoBean> allPoliceStationInfoBeanArrayList;
+	public static List<AllPoliceStationInfoBean> allPoliceStationInfoBeanArrayList;
    
     public void findAllPoliceStationInfo(double latitude, double longitude,String placeSpacification) throws AppCommonExceptionClass 
     {
-
-    	try {
-    		String urlString = this.makeUrl(latitude, longitude,placeSpacification);
-        
-            AppReflectUtilityClass.invokeMethod("com.example.idost.util.GetUrlUtilityClass", "getUrlConnContents",new Class[] {String.class}, new Object[] {urlString});
-            String jsonAllPoliceStationInfo = GetUrlUtilityClass.urlContent;
-
-            JSONObject jsonObj = new JSONObject(jsonAllPoliceStationInfo);
-            JSONArray jsonObjArr = jsonObj.getJSONArray("results");
-
-            allPoliceStationInfoBeanArrayList = new ArrayList<AllPoliceStationInfoBean>();
-            for (int i = 0; i < jsonObjArr.length(); i++) {
-                try {
-                	AllPoliceStationInfoBean allPoliceStationInfoBean = this.jsonToAllPoliceRefBean((JSONObject) jsonObjArr.get(i));
-                	allPoliceStationInfoBeanArrayList.add(allPoliceStationInfoBean);
-                } catch (Exception e) {
-                	throw new AppCommonExceptionClass(AppCommonBean.mContext, e);
-                }
-            }
+    	int policeSearchDist = 5000;
+        try{ 
+    	this.getAllPoliceInfo(latitude, longitude, placeSpacification,policeSearchDist);
             
-        } catch (JSONException ex) {
-        	throw new AppCommonExceptionClass(AppCommonBean.mContext, ex);
         }catch(Exception e)
         {
         	throw new AppCommonExceptionClass(AppCommonBean.mContext, e);
         }
     }
     
-    private String makeUrl(double latitude, double longitude,String placeSpacification) throws AppCommonExceptionClass {
+    private void getAllPoliceInfo(double latitude, double longitude,String placeSpacification,int policeSearchDist) throws AppCommonExceptionClass 
+    {
+    	
+    	try {
+    		String urlString = this.makeUrl(latitude, longitude,placeSpacification,policeSearchDist);
+        
+            AppReflectUtilityClass.invokeMethod("com.example.idost.util.GetUrlUtilityClass", "getUrlConnContents",new Class[] {String.class}, new Object[] {urlString});
+            String jsonAllPoliceStationInfo = GetUrlUtilityClass.urlContent;
+
+            JSONObject jsonObj = new JSONObject(jsonAllPoliceStationInfo);
+            JSONArray jsonObjArr = jsonObj.getJSONArray("results");
+							            if(jsonObjArr!= null && jsonObjArr.length()>0)
+							            {
+							            	for (int i = 0; i < jsonObjArr.length(); i++) {
+							                    
+							                    	AllPoliceStationInfoBean allPoliceStationInfoBean = this.jsonToAllPoliceRefBean((JSONObject) jsonObjArr.get(i));
+							                    	
+							                    	AppReflectUtilityClass.invokeMethod("com.example.idost.NearestPoliceStationInfoClass", "findNearPoliceStationInfo",new Class[] {AllPoliceStationInfoBean.class}, new Object[] {allPoliceStationInfoBean});
+							                    	 if(NearestPoliceInfoBean.policeFrmattedPhNo != null)
+							                     	{
+							                         	break;
+							                     	}
+							                	}
+							            	
+							            	if(NearestPoliceInfoBean.policeFrmattedPhNo == null)
+					                     	{
+							            		getAllPoliceInfo(latitude,longitude,placeSpacification,policeSearchDist+5000);
+					                     	}
+							                
+							            }else{
+							            	getAllPoliceInfo(latitude,longitude,placeSpacification,policeSearchDist+5000);
+							            }
+    	} catch (JSONException ex) {
+        	throw new AppCommonExceptionClass(AppCommonBean.mContext, ex);
+        }catch(Exception e)
+        {
+        	throw new AppCommonExceptionClass(AppCommonBean.mContext, e);
+        }
+    	
+    }
+    
+    private String makeUrl(double latitude, double longitude,String placeSpacification,int policeSearchDist) throws AppCommonExceptionClass {
     	String retUrl= null;
     	try{
 		    	String url = "https://maps.googleapis.com/maps/api/place/search/json?";
 		    	
 		    	ArrayList<String> params = new ArrayList<String>();
 		    	params.add("&location="+Double.toString(latitude)+","+Double.toString(longitude));
-		    	params.add("&radius=5000");
+		    	params.add("&radius="+policeSearchDist);
 		    	params.add("&rankBy=distance");
 		    	params.add("&types="+placeSpacification);
 		    	params.add("&sensor=true");
@@ -73,8 +97,7 @@ public class GetAllPoliceStationInfoClass {
 	}
 
     
-    @SuppressWarnings("static-access")
-	private AllPoliceStationInfoBean jsonToAllPoliceRefBean(JSONObject jsonObj) throws AppCommonExceptionClass {
+   private AllPoliceStationInfoBean jsonToAllPoliceRefBean(JSONObject jsonObj) throws AppCommonExceptionClass {
         try {
         	AllPoliceStationInfoBean allPlaceBean = new AllPoliceStationInfoBean();
         	Iterator<?> iter = jsonObj.keys();

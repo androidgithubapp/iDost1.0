@@ -15,14 +15,12 @@ import com.example.idost.util.GetUrlUtilityClass;
 
 public class NearestPoliceStationInfoClass {
 	
-	public static NearestPoliceInfoBean nearestPoliceInfoBean ;
-	
-	
-	public void findNearPoliceStationInfo(ArrayList<AllPoliceStationInfoBean> placeList) throws AppCommonExceptionClass 
+		
+	public void findNearPoliceStationInfo(AllPoliceStationInfoBean allPoliceStationInfoBean) throws AppCommonExceptionClass 
 	    {
-		 nearestPoliceInfoBean = null;
+		 
 		     try {
-	        	nearestPoliceInfoBean = this.getNearestPoliceInfo(placeList.get(0));
+	        	this.getNearestPoliceInfo(allPoliceStationInfoBean);
 	        	/*if(false)
 	        	{
 	        		while(policeInfo.getPoliceFrmattedPhNo()==null || ("").equalsIgnoreCase(policeInfo.getPoliceFrmattedPhNo()))
@@ -38,7 +36,7 @@ public class NearestPoliceStationInfoClass {
 	      
 	    }
 	 
-	 private NearestPoliceInfoBean getNearestPoliceInfo(AllPoliceStationInfoBean allPoliceStationInfoBean) throws AppCommonExceptionClass
+	 private void getNearestPoliceInfo(AllPoliceStationInfoBean allPoliceStationInfoBean) throws AppCommonExceptionClass
 	 {
 		 
 		 try{
@@ -50,7 +48,7 @@ public class NearestPoliceStationInfoClass {
 		  
 			 JSONObject jsonObj = new JSONObject(jsonNearestPoliceStationInfo);
 			 JSONObject jsonObjResult = jsonObj.getJSONObject("result");
-			 return this.jsonToNearestPoliceInfoBean(jsonObjResult);
+			 this.jsonToNearestPoliceInfoBean(jsonObjResult);
           
 		 }catch(JSONException jse)
 		 {
@@ -64,8 +62,7 @@ public class NearestPoliceStationInfoClass {
          
      }
 	 
-	    @SuppressWarnings("static-access")
-		private String makeUrl(AllPoliceStationInfoBean allPoliceStationInfoBean) throws AppCommonExceptionClass {
+	   private String makeUrl(AllPoliceStationInfoBean allPoliceStationInfoBean) throws AppCommonExceptionClass {
 	        String retUrl;
 	    	try{
 	    	String url = "https://maps.googleapis.com/maps/api/place/details/json?";
@@ -88,19 +85,16 @@ public class NearestPoliceStationInfoClass {
 	    }
 
 	 
-	    @SuppressWarnings("static-access")
-		private NearestPoliceInfoBean jsonToNearestPoliceInfoBean(JSONObject jsonObj) throws AppCommonExceptionClass {
-	    	NearestPoliceInfoBean result =null;
+	   private void jsonToNearestPoliceInfoBean(JSONObject jsonObj) throws AppCommonExceptionClass {
 	    	try {
 	        	
 	        	Iterator<?> iter = jsonObj.keys();
-	        	result = new NearestPoliceInfoBean();
 	            while(iter.hasNext()){
 	                String jsonkey = (String)iter.next();
 	                String value = jsonObj.getString(jsonkey);
 	                if(jsonkey.equalsIgnoreCase("id"))
 	                {
-	                	result.policeId = value;
+	                	NearestPoliceInfoBean.policeId = value;
 	                }
 	                if(jsonkey.equalsIgnoreCase("name"))
 	                {
@@ -108,27 +102,27 @@ public class NearestPoliceStationInfoClass {
 	                	{
 	                		value = value.replace("Police Station", "Police");
 	                	}
-	                	  result.policeNm = value;
+	                	NearestPoliceInfoBean.policeNm = value;
 	  		          
 	                }
 	                if(jsonkey.equalsIgnoreCase("formatted_address"))
 	                {
-	                	  result.policeFrmattedAdd = value;
+	                	NearestPoliceInfoBean.policeFrmattedAdd = value;
 		  		          
 	                }
 	                if(jsonkey.equalsIgnoreCase("international_phone_number"))
 	                {
-	                	  result.policeIntFrmattedPhNo = value;
+	                	NearestPoliceInfoBean.policeIntFrmattedPhNo = value;
 		  		               
 	                }
 	                if(jsonkey.equalsIgnoreCase("formatted_phone_number"))
 	                {
-	                	  result.policeFrmattedPhNo = value;
+	                	NearestPoliceInfoBean.policeFrmattedPhNo = value;
 		  		     
 	                }
 	                if(jsonkey.equalsIgnoreCase("vicinity"))
 	                {
-	                    result.policeVicinity = value;
+	                	NearestPoliceInfoBean.policeVicinity = value;
 			  		     
 	                }
 	                
@@ -137,7 +131,7 @@ public class NearestPoliceStationInfoClass {
 	        } catch (JSONException ex) {
 	        	throw new AppCommonExceptionClass(AppCommonBean.mContext, ex);
 	 	        }
-	    	return result;
+	    
 	    }
 		
 }

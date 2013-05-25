@@ -14,27 +14,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.idost.GetCurrentAddrLocClass;
 import com.example.idost.R;
+import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.AppCommonBean;
-import com.example.idost.receiver.ResponseIdostReceiver;
+import com.example.idost.pojo.ContactBean;
+import com.example.idost.pojo.NearestPoliceInfoBean;
+import com.example.idost.receiver.ResponseCurrentAddReceiver;
+import com.example.idost.receiver.ResponsePoliceInfoReceiver;
 import com.example.idost.receiver.SmsDeliverIdostReceiver;
 import com.example.idost.receiver.SmsSendIdostReceiver;
-import com.example.idost.service.CurAddPolAddiDostService;
+import com.example.idost.service.CurrentAddressService;
 import com.example.idost.util.AppCallServiceUtilityClass;
 import com.example.idost.util.AppCommonExceptionClass;
 import com.example.idost.util.AppReflectUtilityClass;
 import com.example.idost.util.PreferUtilityClass;
+import com.example.idost.util.ShowAlertUtilityClass;
 
 
 
 public class MainActivity extends Activity{
 
     
-	private ResponseIdostReceiver receiver;
+	private ResponseCurrentAddReceiver currAddreceiver;
+	private ResponsePoliceInfoReceiver policeReceiver;
 	private SmsSendIdostReceiver smssendreceiver;
 	private SmsDeliverIdostReceiver smsdeliverreceiver;
 	
@@ -51,50 +56,68 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
        
        Button buttonSms = (Button)findViewById(R.id.btnSMS);
+       ResponseCurrentAddReceiver.msgBtn = buttonSms;
+       buttonSms.setText("Service is loading");
        buttonSms.setOnClickListener(startSmsListener);
        
        Button buttonPhone = (Button)findViewById(R.id.btnCall);
+       ResponsePoliceInfoReceiver.callPlcBtn = buttonPhone;
+       buttonPhone.setText("Service is loading");
        buttonPhone.setOnClickListener(startCallListener);
        
-       TextView input = (TextView) findViewById(R.id.txtView);
-       ResponseIdostReceiver.input = input;
-       input.setText("Service is Running...");
+       
     }
 
 	//@Override
 	
 	  protected void onStart() {
 	    	super.onStart();
+	    	
 	    	 try {
 	      	   
 	    		 AppCommonBean.mContext = MainActivity.this; 
 	    		 PreferUtilityClass.PopulateMap(AppCommonBean.mContext);
+	    		 
 	      	   	 AppReflectUtilityClass.invokeMethod("com.example.idost.GetLocationClass", "getLocation",null, null);
-	      	   	 AppCallServiceUtilityClass.getService(MainActivity.this, "com.example.idost.service.CurAddPolAddiDostService");
-		      	   
+	      	   	 
+	      	   	 AppCallServiceUtilityClass.getService(MainActivity.this, "com.example.idost.service.CurrentAddressService");
+		      	 
+	      	   	 AppCallServiceUtilityClass.getService(MainActivity.this, "com.example.idost.service.PoliceAddService");
+		      	 
 	      	   	   
 	         	}catch(Exception e)
 	  			{
-	  				e.printStackTrace();
+	  				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+	  				if(AppCommonBean.commonErrMsg.equalsIgnoreCase(AppCommonConstantsClass.LOC_PROVIDER_NULL))
+	  				{
+	  					ShowAlertUtilityClass.showSettingsAlert(AppCommonConstantsClass.NET_GPS_NOT_ENABLED);
+	  				}
 	  			}
 	    	 
-	    	 receiver = new ResponseIdostReceiver();
-	         IntentFilter intFltr = new IntentFilter();
-	         intFltr.addAction(ResponseIdostReceiver.ACTION_RESP);
-	         registerReceiver(receiver,intFltr);
+	    	 currAddreceiver = new ResponseCurrentAddReceiver();
+	         IntentFilter intFltrCurrAdd = new IntentFilter();
+	         intFltrCurrAdd.addAction(ResponseCurrentAddReceiver.ACTION_RESP);
+	         registerReceiver(currAddreceiver,intFltrCurrAdd);
+	         
+	         policeReceiver = new ResponsePoliceInfoReceiver();
+	         IntentFilter intFltrPolice = new IntentFilter();
+	         intFltrPolice.addAction(ResponsePoliceInfoReceiver.ACTION_RESP);
+	         registerReceiver(currAddreceiver,intFltrPolice);
 	         
 	         
+	         AppCommonBean.smsdeliverreceiver = smsdeliverreceiver;
+	         AppCommonBean.smssendreceiver = smssendreceiver;
 	         
-	         smssendreceiver = new SmsSendIdostReceiver();
+	         AppCommonBean.smssendreceiver = new SmsSendIdostReceiver();
 	         IntentFilter intFltrSmsSend = new IntentFilter(SmsSendIdostReceiver.SMS_SEND_RESP);
-	         registerReceiver(smssendreceiver,intFltrSmsSend);
+	         registerReceiver(AppCommonBean.smssendreceiver,intFltrSmsSend);
 
-	         smsdeliverreceiver = new SmsDeliverIdostReceiver();
+	         AppCommonBean.smsdeliverreceiver = new SmsDeliverIdostReceiver();
 	         IntentFilter intFltrSmsDelivered = new IntentFilter(SmsDeliverIdostReceiver.SMS_DELIVER_RESP);
-	         registerReceiver(smsdeliverreceiver,intFltrSmsDelivered);
+	         registerReceiver(AppCommonBean.smsdeliverreceiver,intFltrSmsDelivered);
 
-		       
-	    	 
+	         
+	         
 	  	}
 	    
 	    protected void onRestart() {
@@ -116,7 +139,8 @@ public class MainActivity extends Activity{
 	   
 		@Override
 	    protected void onDestroy() {
-	        this.unregisterReceiver(receiver);
+	        this.unregisterReceiver(currAddreceiver);
+	        this.unregisterReceiver(policeReceiver);
 	        this.unregisterReceiver(smssendreceiver);
 	        this.unregisterReceiver(smsdeliverreceiver);
 
@@ -138,7 +162,7 @@ public class MainActivity extends Activity{
 		{
 			try{
 
-				CurAddPolAddiDostService.fireSMSService = true;
+				CurrentAddressService.fireSMSService = true;
 				AppCallServiceUtilityClass.getService(MainActivity.this, "com.example.idost.service.MessagingService");
 				}
 				catch(Exception e)
@@ -161,7 +185,7 @@ public class MainActivity extends Activity{
 		{
 			
 			try{
-				String nearestPolPhn = CurAddPolAddiDostService.appCommonBean.nearestPoliceInfoBean.policeIntFrmattedPhNo;
+				String nearestPolPhn = NearestPoliceInfoBean.policeIntFrmattedPhNo;
 				if(nearestPolPhn!=null && !("".equalsIgnoreCase(nearestPolPhn)))
 				{
 					String uriString = "tel:"+nearestPolPhn;
@@ -240,7 +264,10 @@ public class MainActivity extends Activity{
                 				 PreferUtilityClass.StoreContact(MainActivity.this, name, phoneNumber);
                 			 }
                 		}
+                		else
+                			ContactBean.showMsg="Cannot Add Contact!";
                 	}
+                	Toast.makeText(AppCommonBean.mContext, ContactBean.showMsg, Toast.LENGTH_LONG).show();
             	}
             	catch(Exception ex)
             	{

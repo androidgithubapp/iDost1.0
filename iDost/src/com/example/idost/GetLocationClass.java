@@ -30,6 +30,7 @@ public class GetLocationClass extends Service{
 			}
 			else
 			{
+				AppCommonBean.commonErrMsg = AppCommonConstantsClass.USR_LOC_MNG_NULL;
 				throw new Exception(AppCommonConstantsClass.LOC_MNG_NULL);
 			}
 
@@ -39,9 +40,6 @@ public class GetLocationClass extends Service{
 
 	}
 
-	/*
-	 * getting the provider network/GPs
-	 */
 	private void getProvider() throws AppCommonExceptionClass {
 		try {
 			Criteria crt = new Criteria();
@@ -61,6 +59,7 @@ public class GetLocationClass extends Service{
 				}
 
 			} else {
+				AppCommonBean.commonErrMsg = AppCommonConstantsClass.LOC_PROVIDER_NULL;
 				throw new Exception(AppCommonConstantsClass.LOC_PROVIDER_NULL);
 			}
 
@@ -80,11 +79,13 @@ public class GetLocationClass extends Service{
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,networkLocationListener);
 			location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		} else {
+			AppCommonBean.commonErrMsg = AppCommonConstantsClass.LOC_PROVIDER_NULL;
 			throw new Exception(AppCommonConstantsClass.LOC_NET_PROVIDER_NULL);
 		}
 		
 		if(location == null)
 		{
+			AppCommonBean.commonErrMsg = AppCommonConstantsClass.USR_LOC_MNG_NULL;
 			throw new Exception(AppCommonConstantsClass.LOC_NULL);
 		}
 
@@ -104,7 +105,7 @@ public class GetLocationClass extends Service{
 				this.getNetworkProvider();
 			}
 		} else {
-			throw new Exception(AppCommonConstantsClass.LOC_GPS_PROVIDER_NULL);
+			this.getNetworkProvider();
 		}
 	}
 
