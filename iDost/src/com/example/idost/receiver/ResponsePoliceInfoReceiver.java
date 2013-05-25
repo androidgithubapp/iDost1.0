@@ -18,9 +18,11 @@ public class ResponsePoliceInfoReceiver extends BroadcastReceiver{
 				if(!PoliceAddService.isPoliceExceptionOccured)
 				{
 					callPlcBtn.setText("Service loaded everyThing");
+					callPlcBtn.setEnabled(true);
 				}
 				else{
 					callPlcBtn.setText("there is an exception in service");
+					callPlcBtn.setEnabled(false);
 				}
 	}
 

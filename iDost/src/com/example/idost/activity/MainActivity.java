@@ -58,11 +58,13 @@ public class MainActivity extends Activity{
        Button buttonSms = (Button)findViewById(R.id.btnSMS);
        ResponseCurrentAddReceiver.msgBtn = buttonSms;
        buttonSms.setText("Service is loading");
+       buttonSms.setEnabled(false);
        buttonSms.setOnClickListener(startSmsListener);
        
        Button buttonPhone = (Button)findViewById(R.id.btnCall);
        ResponsePoliceInfoReceiver.callPlcBtn = buttonPhone;
        buttonPhone.setText("Service is loading");
+       buttonPhone.setEnabled(false);
        buttonPhone.setOnClickListener(startCallListener);
        
        
@@ -73,6 +75,18 @@ public class MainActivity extends Activity{
 	  protected void onStart() {
 	    	super.onStart();
 	    	
+	    	 currAddreceiver = new ResponseCurrentAddReceiver();
+	         IntentFilter intFltrCurrAdd = new IntentFilter();
+	         intFltrCurrAdd.addAction(ResponseCurrentAddReceiver.ACTION_RESP);
+	         registerReceiver(currAddreceiver,intFltrCurrAdd);
+	         
+	         policeReceiver = new ResponsePoliceInfoReceiver();
+	         IntentFilter intFltrPolice = new IntentFilter();
+	         intFltrPolice.addAction(ResponsePoliceInfoReceiver.ACTION_RESP);
+	         registerReceiver(policeReceiver,intFltrPolice);
+	        
+	    	
+	    	
 	    	 try {
 	      	   
 	    		 AppCommonBean.mContext = MainActivity.this; 
@@ -80,9 +94,9 @@ public class MainActivity extends Activity{
 	    		 
 	      	   	 AppReflectUtilityClass.invokeMethod("com.example.idost.GetLocationClass", "getLocation",null, null);
 	      	   	 
-	      	   	 AppCallServiceUtilityClass.getService(MainActivity.this, "com.example.idost.service.CurrentAddressService");
+	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, "com.example.idost.service.CurrentAddressService");
 		      	 
-	      	   	 AppCallServiceUtilityClass.getService(MainActivity.this, "com.example.idost.service.PoliceAddService");
+	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, "com.example.idost.service.PoliceAddService");
 		      	 
 	      	   	   
 	         	}catch(Exception e)
@@ -94,17 +108,7 @@ public class MainActivity extends Activity{
 	  				}
 	  			}
 	    	 
-	    	 currAddreceiver = new ResponseCurrentAddReceiver();
-	         IntentFilter intFltrCurrAdd = new IntentFilter();
-	         intFltrCurrAdd.addAction(ResponseCurrentAddReceiver.ACTION_RESP);
-	         registerReceiver(currAddreceiver,intFltrCurrAdd);
-	         
-	         policeReceiver = new ResponsePoliceInfoReceiver();
-	         IntentFilter intFltrPolice = new IntentFilter();
-	         intFltrPolice.addAction(ResponsePoliceInfoReceiver.ACTION_RESP);
-	         registerReceiver(currAddreceiver,intFltrPolice);
-	         
-	         
+	    	 
 	         AppCommonBean.smsdeliverreceiver = smsdeliverreceiver;
 	         AppCommonBean.smssendreceiver = smssendreceiver;
 	         
@@ -168,9 +172,6 @@ public class MainActivity extends Activity{
 				catch(Exception e)
 				{
 					e.printStackTrace();
-				}catch(Error er)
-				{
-					er.printStackTrace();
 				}
 		}
 	};

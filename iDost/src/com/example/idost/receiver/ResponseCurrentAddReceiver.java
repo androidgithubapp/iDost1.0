@@ -17,9 +17,11 @@ public class ResponseCurrentAddReceiver extends BroadcastReceiver{
 		if(!CurrentAddressService.isExceptionOccured)
 		{
 			msgBtn.setText("Service loaded everyThing");
+			msgBtn.setEnabled(true);
 		}
 		else{
 			msgBtn.setText("there is an exception in service");
+			msgBtn.setEnabled(false);
 		}
 		
 	}
