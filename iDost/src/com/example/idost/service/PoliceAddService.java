@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.example.idost.GetLocationClass;
+import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.receiver.ResponsePoliceInfoReceiver;
 import com.example.idost.util.AppReflectUtilityClass;
 
@@ -25,7 +26,7 @@ public class PoliceAddService extends IntentService{
 	protected void onHandleIntent(Intent intent) {
 		
 		try{
-			AppReflectUtilityClass.invokeMethod("com.example.idost.GetAllPoliceStationInfoClass", "findAllPoliceStationInfo",new Class[] {Double.TYPE,Double.TYPE,String.class}, new Object[] {GetLocationClass.location.getLatitude(),GetLocationClass.location.getLongitude(),"police"});
+			AppReflectUtilityClass.invokeMethod(AppCommonConstantsClass.ALL_POL_CLS, AppCommonConstantsClass.ALL_POL_MTH,new Class[] {Double.TYPE,Double.TYPE,String.class}, new Object[] {GetLocationClass.location.getLatitude(),GetLocationClass.location.getLongitude(),"police"});
 			
 		}catch(Exception ex)
 		{

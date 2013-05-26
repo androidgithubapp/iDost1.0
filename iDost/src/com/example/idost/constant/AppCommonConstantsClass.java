@@ -68,8 +68,17 @@ public class AppCommonConstantsClass {
 	public static String CALL_POL = "Call Police";
 	public static String SMS_DLV_Y = "SMS Delivered";
 	public static String SMS_DLV_N = "SMS not Delivered";
-	public static String SMS_SEND_Y = "";
+	public static String SMS_SEND_Y = "SMS Sending";
+	public static String SMS_SEND_GEN_ERR = "Sms failed due to generic failure";
+	public static String SMS_SERV_NOT_AVAIL =  "could not send the message due to unavailability of service.";
+	public static String SMS_NO_PDU = "Null PDU";
+	public static String SMS_NOT_SENT = "Message could not be sent";
 	public static String SERVICE_EXP= "Exception in Service";
+	
+	public static String ALERT_SETTING = "Settings";
+	public static String ALERT_CANCEL ="Cancel";
+	
+	public static String MSG_CONT = "Please Help! I am in Danger, My current Location is ";
 	
 	public static String GET_URL_UTL_CLS = "com.example.idost.util.GetUrlUtilityClass";
 	public static String GET_URL_UTL_MTH = "getUrlConnContents";
@@ -79,8 +88,11 @@ public class AppCommonConstantsClass {
 	public static String NEAR_POL_CLS = "com.example.idost.NearestPoliceStationInfoClass";
 	public static String NEAR_POL_MTH = "findNearPoliceStationInfo";
 	
+	public static String ALL_POL_CLS = "com.example.idost.GetAllPoliceStationInfoClass";
+	public static String ALL_POL_MTH = "findAllPoliceStationInfo";
 	
-	
+	public static String CURR_ADDR__CLS = "com.example.idost.GetCurrentAddrLocClass";
+	public static String CURR_ADDR_MTH =  "getGeoLocation";
 	
 	
 	

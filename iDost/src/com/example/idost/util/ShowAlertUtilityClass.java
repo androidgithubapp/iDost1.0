@@ -25,7 +25,7 @@ public class ShowAlertUtilityClass {
 	        alertDialog.setMessage(AppCommonConstantsClass.USR_SETTING_MSG);
 	 
 	        // On pressing Settings button
-	        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+	        alertDialog.setPositiveButton(AppCommonConstantsClass.ALERT_SETTING, new DialogInterface.OnClickListener() {
 	        	
 	            public void onClick(DialogInterface dialog,int which) {
 	                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -35,7 +35,7 @@ public class ShowAlertUtilityClass {
 	        });
 		
 	 	 // on pressing cancel button
-	    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	    alertDialog.setNegativeButton(AppCommonConstantsClass.ALERT_CANCEL, new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int which) {
 	        dialog.cancel();
 	        ((Activity) AppCommonBean.mContext).finish();

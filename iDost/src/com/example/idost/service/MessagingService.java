@@ -26,11 +26,8 @@ public class MessagingService extends IntentService {
 		// TODO Auto-generated method stub
 		
 		try{
-		String currentAddress = CurrentAddressBean.addressLine + "," +  CurrentAddressBean.locality;
-		
-		
-		final String msgContent = "HELP! I am in great danger," + 
-									"now I am at:"+currentAddress ;
+				
+		final String msgContent = AppCommonConstantsClass.MSG_CONT+CurrentAddressBean.addressLine + "," +  CurrentAddressBean.locality; ;
 		
 		SmsManager smsManager = SmsManager.getDefault();
 		ArrayList<String> smsParts =smsManager.divideMessage(msgContent);
