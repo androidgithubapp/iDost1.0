@@ -78,7 +78,8 @@ public class AppCommonConstantsClass {
 	public static String ALERT_SETTING = "Settings";
 	public static String ALERT_CANCEL ="Cancel";
 	
-	public static String MSG_CONT = "Please Help! I am in Danger, My current Location is ";
+	public static String MSG_CONT1 = "Please Help! I am in Danger" ;
+	public static String MSG_CONT2 = ", My current Location is ";
 	
 	public static String GET_URL_UTL_CLS = "com.example.idost.util.GetUrlUtilityClass";
 	public static String GET_URL_UTL_MTH = "getUrlConnContents";

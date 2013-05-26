@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.idost.GetCurrentAddrLocClass;
+import com.example.idost.GetLocationClass;
 import com.example.idost.R;
 import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.AppCommonBean;
@@ -139,6 +140,11 @@ public class MainActivity extends Activity{
 		@Override
 	    protected void onDestroy() {
 			super.onDestroy();
+			 AppCommonBean.msgBtnClicked = true;
+	    	 GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
+	    	 GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
+	    		
+			
 			this.unregisterReceiver(policeReceiver);
 	        this.unregisterReceiver(currAddreceiver);
 	        this.unregisterReceiver(smsdeliverreceiver);
@@ -151,6 +157,8 @@ public class MainActivity extends Activity{
 				
 				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
   			}
+	        
+	       
 	        
 	    }
 
@@ -227,6 +235,9 @@ public class MainActivity extends Activity{
     		startActivity(new Intent(MainActivity.this,ContactActivity.class));
     		return true;
     	case R.id.stop_sms_service:
+    		AppCommonBean.msgBtnClicked = true;
+    		GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
+    		GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
     		return true;
     	default:
     		return false;

@@ -26,7 +26,7 @@ public class GetCurrentAddrLocClass {
 				List<Address> addresses = geocoder.getFromLocation(latitude,longitude, 1);
 
 				if (addresses != null && addresses.size() > 0 && addresses.get(0).getAddressLine(0) != null) {
-						CurrentAddressBean.addressLine = addresses.get(0).getAddressLine(0);
+						CurrentAddressBean.curraddressLine = addresses.get(0).getAddressLine(0);
 						CurrentAddressBean.locality = addresses.get(0).getLocality();
 						CurrentAddressBean.adminArea = addresses.get(0).getAdminArea();
 						CurrentAddressBean.countryCode = addresses.get(0).getCountryCode();

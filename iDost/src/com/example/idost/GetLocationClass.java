@@ -12,16 +12,16 @@ import android.widget.Toast;
 
 import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.AppCommonBean;
+import com.example.idost.pojo.CurrentAddressBean;
 import com.example.idost.util.AppCallServiceUtilityClass;
 import com.example.idost.util.AppCommonExceptionClass;
 import com.example.idost.util.ShowAlertUtilityClass;
 
 public class GetLocationClass extends Service{
 	
-	private LocationManager locationManager = null;
+	public static LocationManager locationManager = null;
 	public static Location location;
 	
-	private int i = 0;
 
 	public void getLocation() throws AppCommonExceptionClass {
 		try {
@@ -81,7 +81,7 @@ public class GetLocationClass extends Service{
 
 		// get the location from network provider
 		if (isNetworkEnabled) {
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,networkLocationListener);
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,(10 * 60 * 1000), 0,networkLocationListener);
 			location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		} else {
 			AppCommonBean.commonErrMsg = AppCommonConstantsClass.LOC_PROVIDER_NULL;
@@ -104,7 +104,7 @@ public class GetLocationClass extends Service{
 
 		// get the location from GPS provider
 		if (isGPSEnabled) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, gpsLocationListener);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, (10 * 60 * 1000), 0, gpsLocationListener);
 			location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 			if (location == null) {
 				this.getNetworkProvider();
@@ -115,7 +115,7 @@ public class GetLocationClass extends Service{
 	}
 
 	
-	private final LocationListener networkLocationListener = new LocationListener(){
+	public static final LocationListener networkLocationListener = new LocationListener(){
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -134,21 +134,23 @@ public class GetLocationClass extends Service{
 		@Override
 		public void onLocationChanged(Location loc) {
 			
-			if(loc!= null && location!=null && ((loc.getLatitude() != location.getLatitude()) || (loc.getLongitude() != location.getLongitude())))
+			if(loc!= null && location!=null)
 			{
-				location = loc;
+				
 				try {
-			      	   
-		    		 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
-			      	 
-		      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
+			    	String prevaddressLine = CurrentAddressBean.curraddressLine;
+					AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
+					if(prevaddressLine != null && !prevaddressLine.equalsIgnoreCase(CurrentAddressBean.curraddressLine))
+					{
+						location = loc;
+		      	   	    AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
 			      	   if(AppCommonBean.msgBtnClicked)
 				   		{
 			      		   	AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.MSG_SERVICE);
 				   		}
 
-		      	   	   
-		         	}catch(Exception e)
+					}
+			 	}catch(Exception e)
 		  			{
 		  				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
 		  				if(AppCommonBean.commonErrMsg.equalsIgnoreCase(AppCommonConstantsClass.LOC_PROVIDER_NULL))
@@ -157,13 +159,12 @@ public class GetLocationClass extends Service{
 		  				}
 		  			}
 
-				Toast.makeText(AppCommonBean.mContext, " Network "+String.valueOf(i++) , Toast.LENGTH_SHORT).show();
 			}
 		
 		}
 	};
 
-	private final LocationListener gpsLocationListener = new LocationListener() {
+	public static LocationListener gpsLocationListener = new LocationListener() {
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -180,21 +181,23 @@ public class GetLocationClass extends Service{
 		@Override
 		public void onLocationChanged(Location loc) {
 			
-			if(loc!= null && location!=null && ((loc.getLatitude() != location.getLatitude()) || (loc.getLongitude() != location.getLongitude())))
+			if(loc!= null && location!=null)
 			{
-				location = loc;
+				
 				try {
-			      	   
-		    		 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
-			      	 
-		      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
+			    	String prevaddressLine = CurrentAddressBean.curraddressLine;
+					AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
+					if(prevaddressLine != null && !prevaddressLine.equalsIgnoreCase(CurrentAddressBean.curraddressLine))
+					{
+						location = loc;
+		      	   	    AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
 			      	   if(AppCommonBean.msgBtnClicked)
 				   		{
 			      		   	AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.MSG_SERVICE);
 				   		}
 
-		      	   	   
-		         	}catch(Exception e)
+					}
+			 	}catch(Exception e)
 		  			{
 		  				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
 		  				if(AppCommonBean.commonErrMsg.equalsIgnoreCase(AppCommonConstantsClass.LOC_PROVIDER_NULL))
@@ -203,7 +206,6 @@ public class GetLocationClass extends Service{
 		  				}
 		  			}
 
-				Toast.makeText(AppCommonBean.mContext, " GPS "+String.valueOf(i++) , Toast.LENGTH_SHORT).show();
 			}
 			
 			

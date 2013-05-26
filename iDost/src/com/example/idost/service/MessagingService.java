@@ -26,7 +26,12 @@ public class MessagingService extends IntentService {
 		
 		try{
 				
-		final String msgContent = AppCommonConstantsClass.MSG_CONT+CurrentAddressBean.addressLine + "," +  CurrentAddressBean.locality; ;
+		String msgContent = AppCommonConstantsClass.MSG_CONT1;
+		if(CurrentAddressBean.curraddressLine !=null)
+		{
+			msgContent = msgContent+AppCommonConstantsClass.MSG_CONT2+CurrentAddressBean.curraddressLine + "," +  CurrentAddressBean.locality; ;
+		}
+				
 		
 		SmsManager smsManager = SmsManager.getDefault();
 		ArrayList<String> smsParts =smsManager.divideMessage(msgContent);
