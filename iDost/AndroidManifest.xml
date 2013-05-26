@@ -32,7 +32,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.idost.activity.ContactActivity"
+            android:name="com.example.idost.activity.ContactActivity" 
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_contact" >
         </activity>
         

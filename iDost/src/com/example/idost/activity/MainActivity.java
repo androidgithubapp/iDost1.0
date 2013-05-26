@@ -211,12 +211,8 @@ public class MainActivity extends Activity{
 
 	
 	
-	/* (non-Javadoc)
-	 * this portion holds the menu
-	 */
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -252,31 +248,40 @@ public class MainActivity extends Activity{
             	{
             		Uri contactData = data.getData();  
                 	ContentResolver cr=getContentResolver();
-                	Cursor cur=cr.query(contactData, null, null, null, null);
-                	while(cur.moveToNext())
+                	if(cr!= null)
                 	{
-                		String cid=cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                		String name = cur.getString(cur.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-                		if(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)))>0)
-                		{
-                			Cursor pcur=cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ cid,null, null);
-                			 while (pcur.moveToNext())
-                			 {
-                				 String phoneNumber= pcur.getString(pcur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                				 PreferUtilityClass.StoreContact(MainActivity.this, name, phoneNumber);
-                			 }
-                		}
-                		else
-                			ContactBean.showMsg=AppCommonConstantsClass.CONCT_ADD_ERR;
+                		Cursor cur=cr.query(contactData, null, null, null, null);
+                    	while(cur.moveToNext())
+                    	{
+                    		String cid=cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                    		String name = cur.getString(cur.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                    		if(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)))>0)
+                    		{
+                    			Cursor pcur=cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ cid,null, null);
+                    			 while (pcur.moveToNext())
+                    			 {
+                    				 String phoneNumber= pcur.getString(pcur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    				 PreferUtilityClass.StoreContact(MainActivity.this, name, phoneNumber);
+                    			 }
+                    		}
+                    		else
+                    		{
+                    			ContactBean.showMsg=AppCommonConstantsClass.CONCT_ADD_ERR;
+                    		}
+                    	}
+                    	Toast.makeText(AppCommonBean.mContext, ContactBean.showMsg, Toast.LENGTH_LONG).show();
+                		
+                	}else
+                	{
+                		Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
                 	}
-                	Toast.makeText(AppCommonBean.mContext, ContactBean.showMsg, Toast.LENGTH_LONG).show();
+                	
             	}
             	catch(Exception ex)
             	{
-            		ex.printStackTrace();
-            	}
+            		Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();            	}
             
-            }
+            	}
         }
 
 	           

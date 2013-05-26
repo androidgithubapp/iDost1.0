@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -14,7 +15,9 @@ import android.widget.Toast;
 
 import com.example.idost.R;
 import com.example.idost.constant.AppCommonConstantsClass;
+import com.example.idost.pojo.AppCommonBean;
 import com.example.idost.pojo.ContactBean;
+import com.example.idost.util.AppCommonExceptionClass;
 import com.example.idost.util.PreferUtilityClass;
 
 public class ContactActivity extends Activity {
@@ -28,20 +31,20 @@ public class ContactActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.contact);
-		this.contactView=(ListView)findViewById(R.id.listView1);
 		this.txtvw=(TextView)findViewById(R.id.txtViewContact);
 		
 		btndel=(Button)findViewById(R.id.btnDelete);
 		this.LoadContactList();
-		btndel.setOnClickListener(new Button.OnClickListener()
-		{
-			public void onClick(View ConListView)
-			{
-				 DeleteSelections();
-			}
-		});
+		btndel.setOnClickListener(delBtnListn);
 
 	}
+	
+	private OnClickListener delBtnListn = new OnClickListener() {
+		public void onClick(View v)
+		{
+			DeleteSelections();
+		}};
+	
 	 private void DeleteSelections() 
 	 {
 	
@@ -56,14 +59,21 @@ public class ContactActivity extends Activity {
 					ContactBean.ContactMap.remove(this.contactView.getItemAtPosition(index).toString().split(":")[1]);
 				}
 			}
-			PreferUtilityClass.delData(ContactActivity.this);
-			PreferUtilityClass.UpdateContactDetails(ContactActivity.this);
+			
+			try {
+				PreferUtilityClass.delData(ContactActivity.this);
+				PreferUtilityClass.UpdateContactDetails(ContactActivity.this);
+			} catch (AppCommonExceptionClass e) {
+				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+			}
+			
 			LoadContactList();
 		}
 		
 	}
 	public void ShowContactData(String condata)
 	 {
+		try{
 		if(condata!= null && "".equalsIgnoreCase(condata))
 		{
 		String[] strarr=condata.split(";");
@@ -71,13 +81,18 @@ public class ContactActivity extends Activity {
 		 for(int i=0;i<strarr.length;i++)
 			 txtvw.append(strarr[i]+"\n");
 		}
+		}catch(Exception e)
+		{
+			Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+		}
 	 }
 	 
 	 private ArrayList<String> GetContactList(String condata)
 	 {
-		 
 		 ConList=new ArrayList<String>();
-		 if(condata!=null && "".equalsIgnoreCase(condata) && condata.length()!=0)
+		try{
+		 
+		 if(condata!=null && !"".equalsIgnoreCase(condata) && condata.length()!=0)
 		 {
 		 String[] strarr=condata.split(";");
 
@@ -86,7 +101,12 @@ public class ContactActivity extends Activity {
 			ConList.add(strarr[i]);
 		 }
 		 }
+		}catch(Exception e)
+		{
+			Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+		}
 		 return ConList;
+
 		 
 	 }
 	 
@@ -99,7 +119,8 @@ public class ContactActivity extends Activity {
 
 	private void LoadContactList()
 	{
-	
+		this.contactView=(ListView)findViewById(R.id.listView1);
+		
 		try {
 			ArrayList<String> condata=new ArrayList<String>();
 			condata=GetContactList(PreferUtilityClass.GetContact(ContactActivity.this));
@@ -111,7 +132,6 @@ public class ContactActivity extends Activity {
 					android.R.layout.simple_list_item_multiple_choice,condata);
 			contactView.setAdapter(dataAdapter);
 			dataAdapter.notifyDataSetChanged();
-			this.contactView.invalidateViews();
 			this.contactView.setItemsCanFocus(false);
 			this.contactView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 			}
@@ -122,7 +142,7 @@ public class ContactActivity extends Activity {
 				 this.btndel.setEnabled(false);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
 		}
 	}
 }

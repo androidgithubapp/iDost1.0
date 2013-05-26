@@ -11,12 +11,14 @@ import android.preference.PreferenceManager;
 
 import com.example.idost.R;
 import com.example.idost.constant.AppCommonConstantsClass;
+import com.example.idost.pojo.AppCommonBean;
 import com.example.idost.pojo.ContactBean;
 
 public class PreferUtilityClass {SharedPreferences shrpref;
 
-public static void StoreContact(Context context, String name,String Phone) 
+public static void StoreContact(Context context, String name,String Phone) throws AppCommonExceptionClass 
 {
+	try{
 	ContactBean.showMsg="";
 	if ((ContactBean.ContactMap == null)
 			|| (!ContactBean.ContactMap.containsKey(Phone))) 
@@ -42,12 +44,18 @@ public static void StoreContact(Context context, String name,String Phone)
 	else
 		ContactBean.showMsg=AppCommonConstantsClass.CNTC_EXIST;
 	
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(context, e);
+	}
+	
 }
 
 
 
-public static void UpdateContact(Context context, ContactBean conobj) 
+public static void UpdateContact(Context context, ContactBean conobj) throws AppCommonExceptionClass 
 {
+	try{
 	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	Editor edit = prefs.edit();
 	String phndata=getData(context);
@@ -58,45 +66,71 @@ public static void UpdateContact(Context context, ContactBean conobj)
 	else
 	edit.putString(context.getString(R.string.CONVAL),phndata+";"+conobj.getName()+":"+conobj.getPhn());
 	edit.commit();
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(context, e);
+	}
 }
 
-public static void UpdateContactDetails(Context context)
+public static void UpdateContactDetails(Context context) throws AppCommonExceptionClass
 {
 
+	try{
 	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	Editor edit = prefs.edit();
 	edit.putString(context.getString(R.string.CONVAL),StoreContactData(GetContactListFromMap()));
 	edit.commit();
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(context, e);
+	}
 }
 
-private static ArrayList<String> GetContactListFromMap()
+private static ArrayList<String> GetContactListFromMap() throws AppCommonExceptionClass
 {
+	try
+	{
 	ArrayList<String> conList=new ArrayList<String>();
 	for(String key: ContactBean.ContactMap.keySet())
 	{
 		conList.add(key+":"+ContactBean.ContactMap.get(key));
 	}
 	return conList;
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(AppCommonBean.cContext, e);
+	}
 }
 
-private static String StoreContactData(ArrayList<String> contactList)
+private static String StoreContactData(ArrayList<String> contactList) throws AppCommonExceptionClass
 {
+	try{
 	String conListData="";
 	for(int i=0;i<contactList.size();i++)
 	{
 		conListData+=contactList.get(i).split(":")[1]+":"+contactList.get(i).split(":")[0]+";";
 	}
 	return conListData;
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(AppCommonBean.cContext, e);
+	}
 }
 
-public static String GetContact(Context context) {
+public static String GetContact(Context context) throws AppCommonExceptionClass {
+	try{
 	SharedPreferences prefs = PreferenceManager
 			.getDefaultSharedPreferences(context);
 	return prefs.getString(context.getString(R.string.CONVAL), "");
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(context, e);
+	}
 }
 
-public static String getData(Context context)
+public static String getData(Context context) throws AppCommonExceptionClass
 {
+	try{
 	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	String data = prefs.getString(context.getString(R.string.CONVAL), null);
 	
@@ -104,18 +138,28 @@ public static String getData(Context context)
 		return null;
 	else
 	return data;
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(context, e);
+	}
 }
 
-public static void delData(Context context) 
+public static void delData(Context context) throws AppCommonExceptionClass 
 {
+	try{
 	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	Editor edit = prefs.edit();
 	edit.putString(context.getString(R.string.CONVAL),null);
 	edit.commit();
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(context, e);
+	}
 }
 
-public static void PopulateMap(Context context) 
+public static void PopulateMap(Context context) throws AppCommonExceptionClass 
 {
+	try{
 	ContactBean.ContactMap=new HashMap<String, String>();
 	String conTactData=getData(context);
 	if(conTactData!=null && !conTactData.equalsIgnoreCase(""))
@@ -126,4 +170,10 @@ public static void PopulateMap(Context context)
 			ContactBean.ContactMap.put(conTactListArr[i].split(":")[1], conTactListArr[i].split(":")[0]);
 		}
 	}
-}}
+	}catch(Exception e)
+	{
+		throw new AppCommonExceptionClass(context, e);
+	}
+}
+	
+}
