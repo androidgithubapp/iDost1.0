@@ -137,6 +137,12 @@ public class GetLocationClass extends Service{
 	    		 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
 		      	 
 	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
+	      	   	 
+		      	if(AppCommonBean.msgBtnClicked)
+			   		{
+		   				AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.MSG_SERVICE);
+			   		}
+
 		      	 
 	      	   	   
 	         	}catch(Exception e)
@@ -173,7 +179,11 @@ public class GetLocationClass extends Service{
 	    		 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
 		      	 
 	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
-		      	 
+	      	   if(AppCommonBean.msgBtnClicked)
+		   		{
+	   				AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.MSG_SERVICE);
+		   		}
+
 	      	   	   
 	         	}catch(Exception e)
 	  			{

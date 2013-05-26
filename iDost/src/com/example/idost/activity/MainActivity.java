@@ -26,7 +26,6 @@ import com.example.idost.receiver.ResponseCurrentAddReceiver;
 import com.example.idost.receiver.ResponsePoliceInfoReceiver;
 import com.example.idost.receiver.SmsDeliverIdostReceiver;
 import com.example.idost.receiver.SmsSendIdostReceiver;
-import com.example.idost.service.CurrentAddressService;
 import com.example.idost.util.AppCallServiceUtilityClass;
 import com.example.idost.util.AppCommonExceptionClass;
 import com.example.idost.util.AppReflectUtilityClass;
@@ -163,7 +162,7 @@ public class MainActivity extends Activity{
 	private OnClickListener startSmsListener = new OnClickListener() {
 		public void onClick(View v)
 		{
-			CurrentAddressService.msgBtnClicked = true;
+			AppCommonBean.msgBtnClicked = true;
 			
 			try{
 
