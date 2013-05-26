@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.idost.R;
+import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.ContactBean;
 import com.example.idost.util.PreferUtilityClass;
 
@@ -31,7 +32,7 @@ public class ContactActivity extends Activity {
 		this.txtvw=(TextView)findViewById(R.id.txtViewContact);
 		
 		btndel=(Button)findViewById(R.id.btnDelete);
-		LoadContactList();
+		this.LoadContactList();
 		btndel.setOnClickListener(new Button.OnClickListener()
 		{
 			public void onClick(View ConListView)
@@ -43,17 +44,17 @@ public class ContactActivity extends Activity {
 	}
 	 private void DeleteSelections() 
 	 {
-		int chkItemCount=this.contactView.getCheckedItemCount();
-		 if(chkItemCount==0)
-			Toast.makeText(ContactActivity.this,"Please Select a Contact To Delete",Toast.LENGTH_SHORT).show();
+	
+		 if(this.contactView != null && this.contactView.getCheckedItemCount()==0)
+			Toast.makeText(ContactActivity.this,AppCommonConstantsClass.CONCT_DEL_MSG,Toast.LENGTH_SHORT).show();
 		else
 		{
 			//ConList=new ArrayList<String>();
-			for(int i=0;i<=this.contactView.getCount();i++)
+			for(int index=0;index<=this.contactView.getCount();index++)
 			{
-				if(this.contactView.isItemChecked(i))
+				if(this.contactView.isItemChecked(index))
 				{
-					ContactBean.ContactMap.remove(this.contactView.getItemAtPosition(i).toString().split(":")[1]);
+					ContactBean.ContactMap.remove(this.contactView.getItemAtPosition(index).toString().split(":")[1]);
 				}
 			}
 			PreferUtilityClass.delData(ContactActivity.this);
@@ -64,17 +65,20 @@ public class ContactActivity extends Activity {
 	}
 	public void ShowContactData(String condata)
 	 {
-		 String[] strarr=condata.split(";");
+		if(condata!= null && "".equalsIgnoreCase(condata))
+		{
+		String[] strarr=condata.split(";");
 		 txtvw.setText("");
 		 for(int i=0;i<strarr.length;i++)
 			 txtvw.append(strarr[i]+"\n");
+		}
 	 }
 	 
 	 private ArrayList<String> GetContactList(String condata)
 	 {
 		 
 		 ConList=new ArrayList<String>();
-		 if(condata.length()!=0)
+		 if(condata!=null && "".equalsIgnoreCase(condata) && condata.length()!=0)
 		 {
 		 String[] strarr=condata.split(";");
 
@@ -113,7 +117,7 @@ public class ContactActivity extends Activity {
 			}
 			else
 			{
-				 txtvw.setText("No Contact Added Yet!");
+				 txtvw.setText(AppCommonConstantsClass.NO_CONCT_ADDED);
 				 this.contactView.setAdapter(null);
 				 this.btndel.setEnabled(false);
 			}

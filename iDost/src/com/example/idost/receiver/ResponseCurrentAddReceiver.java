@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Button;
 
+import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.service.CurrentAddressService;
 
 public class ResponseCurrentAddReceiver extends BroadcastReceiver{
@@ -16,11 +17,11 @@ public class ResponseCurrentAddReceiver extends BroadcastReceiver{
 		// TODO Auto-generated method stub
 		if(!CurrentAddressService.isExceptionOccured)
 		{
-			msgBtn.setText("Service loaded everyThing");
+			msgBtn.setText(AppCommonConstantsClass.SND_MSG);
 			msgBtn.setEnabled(true);
 		}
 		else{
-			msgBtn.setText("there is an exception in service");
+			msgBtn.setText(AppCommonConstantsClass.SERVICE_EXP);
 			msgBtn.setEnabled(false);
 		}
 		

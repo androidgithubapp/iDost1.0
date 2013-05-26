@@ -1,5 +1,6 @@
 package com.example.idost.receiver;
 
+import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.AppCommonBean;
 
 import android.app.Activity;
@@ -18,11 +19,11 @@ public class SmsDeliverIdostReceiver extends BroadcastReceiver{
 		switch(getResultCode())
         {
         case Activity.RESULT_OK:
-            Toast.makeText(AppCommonBean.mContext, "SMS Delivered", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AppCommonBean.mContext, AppCommonConstantsClass.SMS_DLV_Y, Toast.LENGTH_SHORT).show();
             break;
 
         case Activity.RESULT_CANCELED:
-            Toast.makeText(AppCommonBean.mContext, "SMS not Delivered", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AppCommonBean.mContext, AppCommonConstantsClass.SMS_DLV_N, Toast.LENGTH_SHORT).show();
             break;
         }
 	}

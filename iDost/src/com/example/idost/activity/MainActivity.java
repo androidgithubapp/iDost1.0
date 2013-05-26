@@ -150,8 +150,8 @@ public class MainActivity extends Activity{
 				AppCallServiceUtilityClass.stopService(MainActivity.this);
 			} catch (AppCommonExceptionClass e) {
 				
-				e.printStackTrace();
-			}
+				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+  			}
 	        
 	    }
 
@@ -187,15 +187,14 @@ public class MainActivity extends Activity{
 				String nearestPolPhn = NearestPoliceInfoBean.policeIntFrmattedPhNo;
 				if(nearestPolPhn!=null && !("".equalsIgnoreCase(nearestPolPhn)))
 				{
-					String uriString = "tel:"+nearestPolPhn;
+					String uriString = AppCommonConstantsClass.POL_CALL_TEL+nearestPolPhn;
 					Intent intent = new Intent(Intent.ACTION_CALL);
 					intent.setData(Uri.parse(uriString));
 					startActivity(intent);
 				}
 				else
 				{
-					Toast.makeText(AppCommonBean.mContext, "Extremely Sorry! the information is not available" +
-							"yet. Please try after a few seconds", Toast.LENGTH_LONG).show();
+					Toast.makeText(AppCommonBean.mContext, AppCommonConstantsClass.POL_CALL_ERR_MSG, Toast.LENGTH_LONG).show();
 				}
 			}
 			catch(Exception e)
@@ -265,7 +264,7 @@ public class MainActivity extends Activity{
                 			 }
                 		}
                 		else
-                			ContactBean.showMsg="Cannot Add Contact!";
+                			ContactBean.showMsg=AppCommonConstantsClass.CONCT_ADD_ERR;
                 	}
                 	Toast.makeText(AppCommonBean.mContext, ContactBean.showMsg, Toast.LENGTH_LONG).show();
             	}

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Button;
 
+import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.service.PoliceAddService;
 
 public class ResponsePoliceInfoReceiver extends BroadcastReceiver{
@@ -17,11 +18,11 @@ public class ResponsePoliceInfoReceiver extends BroadcastReceiver{
 		// TODO Auto-generated method stub
 				if(!PoliceAddService.isPoliceExceptionOccured)
 				{
-					callPlcBtn.setText("Service loaded everyThing");
+					callPlcBtn.setText(AppCommonConstantsClass.CALL_POL);
 					callPlcBtn.setEnabled(true);
 				}
 				else{
-					callPlcBtn.setText("there is an exception in service");
+					callPlcBtn.setText(AppCommonConstantsClass.SERVICE_EXP);
 					callPlcBtn.setEnabled(false);
 				}
 	}

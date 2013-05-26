@@ -51,10 +51,10 @@ public class GetLocationClass extends Service{
 
 			if (provider != null) {
 				
-				if ("gps".equalsIgnoreCase(provider)) {
+				if (AppCommonConstantsClass.PROVIDER_GPS.equalsIgnoreCase(provider)) {
 					this.getGpsProvider();
 
-				} else if ("network".equalsIgnoreCase(provider)) {
+				} else if (AppCommonConstantsClass.PROVIDER_NETWORK.equalsIgnoreCase(provider)) {
 					this.getNetworkProvider();
 				}
 
