@@ -74,7 +74,6 @@ public class MainActivity extends Activity{
 	
 	  protected void onStart() {
 	    	super.onStart();
-	    	
 	    	 currAddreceiver = new ResponseCurrentAddReceiver();
 	         IntentFilter intFltrCurrAdd = new IntentFilter();
 	         intFltrCurrAdd.addAction(ResponseCurrentAddReceiver.ACTION_COMM_ADD_RESP);
@@ -86,6 +85,18 @@ public class MainActivity extends Activity{
 	         registerReceiver(policeReceiver,intFltrPolice);
 	        
 	    	
+	         AppCommonBean.smsdeliverreceiver = smsdeliverreceiver;
+	         AppCommonBean.smssendreceiver = smssendreceiver;
+	         
+	         AppCommonBean.smssendreceiver = new SmsSendIdostReceiver();
+	         IntentFilter intFltrSmsSend = new IntentFilter(SmsSendIdostReceiver.SMS_SEND_RESP);
+	         registerReceiver(AppCommonBean.smssendreceiver,intFltrSmsSend);
+
+	         AppCommonBean.smsdeliverreceiver = new SmsDeliverIdostReceiver();
+	         IntentFilter intFltrSmsDelivered = new IntentFilter(SmsDeliverIdostReceiver.SMS_DELIVER_RESP);
+	         registerReceiver(AppCommonBean.smsdeliverreceiver,intFltrSmsDelivered);
+
+
 	    	
 	    	 try {
 	      	   
@@ -109,19 +120,6 @@ public class MainActivity extends Activity{
 	  			}
 	    	 
 	    	 
-	         AppCommonBean.smsdeliverreceiver = smsdeliverreceiver;
-	         AppCommonBean.smssendreceiver = smssendreceiver;
-	         
-	         AppCommonBean.smssendreceiver = new SmsSendIdostReceiver();
-	         IntentFilter intFltrSmsSend = new IntentFilter(SmsSendIdostReceiver.SMS_SEND_RESP);
-	         registerReceiver(AppCommonBean.smssendreceiver,intFltrSmsSend);
-
-	         AppCommonBean.smsdeliverreceiver = new SmsDeliverIdostReceiver();
-	         IntentFilter intFltrSmsDelivered = new IntentFilter(SmsDeliverIdostReceiver.SMS_DELIVER_RESP);
-	         registerReceiver(AppCommonBean.smsdeliverreceiver,intFltrSmsDelivered);
-
-	         
-	         
 	  	}
 	    
 	    protected void onRestart() {
@@ -159,6 +157,7 @@ public class MainActivity extends Activity{
 	    }
 
 	
+		
 	/**
 	 * code to send SMS
 	 */

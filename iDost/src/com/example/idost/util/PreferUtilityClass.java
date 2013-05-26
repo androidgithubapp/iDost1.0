@@ -118,7 +118,7 @@ public static void PopulateMap(Context context)
 {
 	ContactBean.ContactMap=new HashMap<String, String>();
 	String conTactData=getData(context);
-	if(conTactData!=null)
+	if(conTactData!=null && !conTactData.equalsIgnoreCase(""))
 	{
 		String[] conTactListArr=conTactData.split(";");
 		for(int i=0;i<conTactListArr.length;i++)
