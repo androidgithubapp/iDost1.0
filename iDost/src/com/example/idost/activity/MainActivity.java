@@ -85,16 +85,14 @@ public class MainActivity extends Activity{
 	         registerReceiver(policeReceiver,intFltrPolice);
 	        
 	    	
-	         AppCommonBean.smsdeliverreceiver = smsdeliverreceiver;
-	         AppCommonBean.smssendreceiver = smssendreceiver;
 	         
-	         AppCommonBean.smssendreceiver = new SmsSendIdostReceiver();
+	         smssendreceiver = new SmsSendIdostReceiver();
 	         IntentFilter intFltrSmsSend = new IntentFilter(SmsSendIdostReceiver.SMS_SEND_RESP);
-	         registerReceiver(AppCommonBean.smssendreceiver,intFltrSmsSend);
+	         registerReceiver(smssendreceiver,intFltrSmsSend);
 
-	         AppCommonBean.smsdeliverreceiver = new SmsDeliverIdostReceiver();
+	         smsdeliverreceiver = new SmsDeliverIdostReceiver();
 	         IntentFilter intFltrSmsDelivered = new IntentFilter(SmsDeliverIdostReceiver.SMS_DELIVER_RESP);
-	         registerReceiver(AppCommonBean.smsdeliverreceiver,intFltrSmsDelivered);
+	         registerReceiver(smsdeliverreceiver,intFltrSmsDelivered);
 
 
 	    	
@@ -142,10 +140,11 @@ public class MainActivity extends Activity{
 		@Override
 	    protected void onDestroy() {
 			super.onDestroy();
+			this.unregisterReceiver(policeReceiver);
 	        this.unregisterReceiver(currAddreceiver);
-	        this.unregisterReceiver(policeReceiver);
-	        this.unregisterReceiver(smssendreceiver);
 	        this.unregisterReceiver(smsdeliverreceiver);
+	        this.unregisterReceiver(smssendreceiver);
+	        
 
 	        try {
 				AppCallServiceUtilityClass.stopService(MainActivity.this);
