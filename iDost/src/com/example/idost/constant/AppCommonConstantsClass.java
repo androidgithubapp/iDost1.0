@@ -85,8 +85,15 @@ public class AppCommonConstantsClass {
 	public static String GET_URL_MTH = "getUrl";
 	
 	
+	
+	public static String GET_LOC_CLS = "com.example.idost.GetLocationClass";
+	public static String GET_LOC_MTH = "getLocation";
+	
+	
+
 	public static String NEAR_POL_CLS = "com.example.idost.NearestPoliceStationInfoClass";
 	public static String NEAR_POL_MTH = "findNearPoliceStationInfo";
+	
 	
 	public static String ALL_POL_CLS = "com.example.idost.GetAllPoliceStationInfoClass";
 	public static String ALL_POL_MTH = "findAllPoliceStationInfo";

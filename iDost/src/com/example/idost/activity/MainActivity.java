@@ -103,7 +103,7 @@ public class MainActivity extends Activity{
 	    		 AppCommonBean.mContext = MainActivity.this; 
 	    		 PreferUtilityClass.PopulateMap(AppCommonBean.mContext);
 	    		 
-	      	   	 AppReflectUtilityClass.invokeMethod("com.example.idost.GetLocationClass", "getLocation",null, null);
+	      	   	 AppReflectUtilityClass.invokeMethod(AppCommonConstantsClass.GET_LOC_CLS,AppCommonConstantsClass.GET_LOC_MTH,null, null);
 	      	   	 
 	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
 		      	 

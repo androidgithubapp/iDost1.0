@@ -40,13 +40,16 @@ public class MessagingService extends IntentService {
 			}
 		
 		
-		if(ContactBean.ContactMap!=null)
+		if(ContactBean.ContactMap!=null && ContactBean.ContactMap.size()>0)
 		{
 			for(String phoneNo : ContactBean.ContactMap.keySet())
 			{
 					smsManager.sendMultipartTextMessage(phoneNo, null, smsParts, piSent, piDeliver);
 					Thread.sleep(2000);
 			}
+		}
+		else{
+			AppCommonBean.commonErrMsg = AppCommonConstantsClass.NO_CONCT_ADDED;
 		}
 		
 		}catch(Exception e)
