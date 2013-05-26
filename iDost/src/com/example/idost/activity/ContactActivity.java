@@ -45,11 +45,10 @@ public class ContactActivity extends Activity {
 	 private void DeleteSelections() 
 	 {
 	
-		 if(this.contactView != null && this.contactView.getCheckedItemCount()==0)
+		 if(this.contactView != null && this.contactView.getCheckedItemPositions().size()==0)
 			Toast.makeText(ContactActivity.this,AppCommonConstantsClass.CONCT_DEL_MSG,Toast.LENGTH_SHORT).show();
 		else
 		{
-			//ConList=new ArrayList<String>();
 			for(int index=0;index<=this.contactView.getCount();index++)
 			{
 				if(this.contactView.isItemChecked(index))
@@ -108,12 +107,13 @@ public class ContactActivity extends Activity {
 			{
 			this.txtvw.setText("");
 			this.btndel.setEnabled(true);
-			
-			contactView.setAdapter(new ArrayAdapter<String>(ContactActivity.this,
-					android.R.layout.simple_list_item_multiple_choice,condata));
-			
-			contactView.setItemsCanFocus(false);
-			contactView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+			ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(ContactActivity.this,
+					android.R.layout.simple_list_item_multiple_choice,condata);
+			contactView.setAdapter(dataAdapter);
+			dataAdapter.notifyDataSetChanged();
+			this.contactView.invalidateViews();
+			this.contactView.setItemsCanFocus(false);
+			this.contactView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 			}
 			else
 			{
