@@ -8,10 +8,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.AppCommonBean;
+import com.example.idost.util.AppCallServiceUtilityClass;
 import com.example.idost.util.AppCommonExceptionClass;
+import com.example.idost.util.ShowAlertUtilityClass;
 
 public class GetLocationClass extends Service{
 	
@@ -129,7 +132,22 @@ public class GetLocationClass extends Service{
 		@Override
 		public void onLocationChanged(Location loc) {
 			location = loc;
-			//AppCallServiceUtilityClass.getService(AppCommonBean.mContext, "com.example.idost.service.CurAddPolAddiDostService");
+			try {
+		      	   
+	    		 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
+		      	 
+	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
+		      	 
+	      	   	   
+	         	}catch(Exception e)
+	  			{
+	  				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+	  				if(AppCommonBean.commonErrMsg.equalsIgnoreCase(AppCommonConstantsClass.LOC_PROVIDER_NULL))
+	  				{
+	  					ShowAlertUtilityClass.showSettingsAlert(AppCommonConstantsClass.NET_GPS_NOT_ENABLED);
+	  				}
+	  			}
+	    	
 		}
 	};
 
@@ -150,7 +168,23 @@ public class GetLocationClass extends Service{
 		@Override
 		public void onLocationChanged(Location loc) {
 			location = loc;
-			//AppCallServiceUtilityClass.getService(AppCommonBean.mContext, "com.example.idost.service.CurAddPolAddiDostService");
+			try {
+		      	   
+	    		 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
+		      	 
+	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
+		      	 
+	      	   	   
+	         	}catch(Exception e)
+	  			{
+	  				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+	  				if(AppCommonBean.commonErrMsg.equalsIgnoreCase(AppCommonConstantsClass.LOC_PROVIDER_NULL))
+	  				{
+	  					ShowAlertUtilityClass.showSettingsAlert(AppCommonConstantsClass.NET_GPS_NOT_ENABLED);
+	  				}
+	  			}
+	    	
+			
 		}
 	};
 

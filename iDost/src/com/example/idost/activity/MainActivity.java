@@ -26,6 +26,7 @@ import com.example.idost.receiver.ResponseCurrentAddReceiver;
 import com.example.idost.receiver.ResponsePoliceInfoReceiver;
 import com.example.idost.receiver.SmsDeliverIdostReceiver;
 import com.example.idost.receiver.SmsSendIdostReceiver;
+import com.example.idost.service.CurrentAddressService;
 import com.example.idost.util.AppCallServiceUtilityClass;
 import com.example.idost.util.AppCommonExceptionClass;
 import com.example.idost.util.AppReflectUtilityClass;
@@ -104,9 +105,9 @@ public class MainActivity extends Activity{
 	    		 
 	      	   	 AppReflectUtilityClass.invokeMethod("com.example.idost.GetLocationClass", "getLocation",null, null);
 	      	   	 
-	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, "com.example.idost.service.CurrentAddressService");
+	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
 		      	 
-	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, "com.example.idost.service.PoliceAddService");
+	      	   	 AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
 		      	 
 	      	   	   
 	         	}catch(Exception e)
@@ -163,9 +164,11 @@ public class MainActivity extends Activity{
 	private OnClickListener startSmsListener = new OnClickListener() {
 		public void onClick(View v)
 		{
+			CurrentAddressService.msgBtnClicked = true;
+			
 			try{
 
-				AppCallServiceUtilityClass.getService(MainActivity.this, "com.example.idost.service.MessagingService");
+				AppCallServiceUtilityClass.getService(MainActivity.this, AppCommonConstantsClass.MSG_SERVICE);
 				}
 				catch(Exception e)
 				{

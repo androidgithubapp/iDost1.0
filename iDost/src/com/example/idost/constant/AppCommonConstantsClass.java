@@ -94,6 +94,7 @@ public class AppCommonConstantsClass {
 	public static String CURR_ADDR__CLS = "com.example.idost.GetCurrentAddrLocClass";
 	public static String CURR_ADDR_MTH =  "getGeoLocation";
 	
-	
-	
+	public static String CURR_ADD_SERVICE = "com.example.idost.service.CurrentAddressService";
+	public static String POL_ADD_SERVICE = "com.example.idost.service.PoliceAddService";
+	public static String MSG_SERVICE = "com.example.idost.service.MessagingService";
 }
