@@ -122,7 +122,6 @@ public class ContactActivity extends Activity {
 				 this.btndel.setEnabled(false);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

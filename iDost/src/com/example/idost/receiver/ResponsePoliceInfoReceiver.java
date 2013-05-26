@@ -15,7 +15,6 @@ public class ResponsePoliceInfoReceiver extends BroadcastReceiver{
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// TODO Auto-generated method stub
 				if(!PoliceAddService.isPoliceExceptionOccured)
 				{
 					callPlcBtn.setText(AppCommonConstantsClass.CALL_POL);

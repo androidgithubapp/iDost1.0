@@ -23,7 +23,6 @@ public class MessagingService extends IntentService {
 	
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		// TODO Auto-generated method stub
 		
 		try{
 				

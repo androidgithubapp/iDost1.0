@@ -14,7 +14,6 @@ public class ResponseCurrentAddReceiver extends BroadcastReceiver{
 	public static Button msgBtn;
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// TODO Auto-generated method stub
 		if(!CurrentAddressService.isExceptionOccured)
 		{
 			msgBtn.setText(AppCommonConstantsClass.SND_MSG);
