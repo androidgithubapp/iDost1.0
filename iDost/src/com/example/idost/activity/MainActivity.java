@@ -77,12 +77,12 @@ public class MainActivity extends Activity{
 	    	
 	    	 currAddreceiver = new ResponseCurrentAddReceiver();
 	         IntentFilter intFltrCurrAdd = new IntentFilter();
-	         intFltrCurrAdd.addAction(ResponseCurrentAddReceiver.ACTION_RESP);
+	         intFltrCurrAdd.addAction(ResponseCurrentAddReceiver.ACTION_COMM_ADD_RESP);
 	         registerReceiver(currAddreceiver,intFltrCurrAdd);
 	         
 	         policeReceiver = new ResponsePoliceInfoReceiver();
 	         IntentFilter intFltrPolice = new IntentFilter();
-	         intFltrPolice.addAction(ResponsePoliceInfoReceiver.ACTION_RESP);
+	         intFltrPolice.addAction(ResponsePoliceInfoReceiver.ACTION_POL_ADD_RESP);
 	         registerReceiver(policeReceiver,intFltrPolice);
 	        
 	    	
@@ -143,6 +143,7 @@ public class MainActivity extends Activity{
 	   
 		@Override
 	    protected void onDestroy() {
+			super.onDestroy();
 	        this.unregisterReceiver(currAddreceiver);
 	        this.unregisterReceiver(policeReceiver);
 	        this.unregisterReceiver(smssendreceiver);
@@ -154,7 +155,7 @@ public class MainActivity extends Activity{
 				
 				e.printStackTrace();
 			}
-	        super.onDestroy();
+	        
 	    }
 
 	
@@ -171,8 +172,8 @@ public class MainActivity extends Activity{
 				}
 				catch(Exception e)
 				{
-					e.printStackTrace();
-				}
+					Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+	  			}
 		}
 	};
 
@@ -202,7 +203,8 @@ public class MainActivity extends Activity{
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
+				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+
 			}
 		}
 	};

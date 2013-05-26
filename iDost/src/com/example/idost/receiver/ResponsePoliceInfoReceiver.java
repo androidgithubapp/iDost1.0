@@ -9,8 +9,8 @@ import com.example.idost.service.PoliceAddService;
 
 public class ResponsePoliceInfoReceiver extends BroadcastReceiver{
 	
+	public static final String ACTION_POL_ADD_RESP = "com.example.idost.service.POLICERESPONSE";
 	public static Button callPlcBtn;;
-	public static String ACTION_RESP = "com.example.idost.service.POLICERESPONSE";
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {

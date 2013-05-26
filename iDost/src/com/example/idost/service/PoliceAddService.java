@@ -16,6 +16,12 @@ public class PoliceAddService extends IntentService{
 	}
 
 	@Override
+	  public void onCreate() {
+	    super.onCreate();
+	  }
+	
+	
+	@Override
 	protected void onHandleIntent(Intent intent) {
 		
 		try{
@@ -27,7 +33,7 @@ public class PoliceAddService extends IntentService{
 		}
 		
 		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(ResponsePoliceInfoReceiver.ACTION_RESP);
+		broadcastIntent.setAction(ResponsePoliceInfoReceiver.ACTION_POL_ADD_RESP);
 		sendBroadcast(broadcastIntent);
 		
 		stopSelf();

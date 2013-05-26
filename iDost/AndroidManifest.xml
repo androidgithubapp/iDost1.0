@@ -32,6 +32,7 @@
         </activity>
         
         <service android:name="com.example.idost.service.CurrentAddressService" />
+        <service android:name="com.example.idost.service.PoliceAddService" />
         <service android:name="com.example.idost.service.MessagingService" />
     </application>
 

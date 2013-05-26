@@ -34,7 +34,7 @@ public class CurrentAddressService extends IntentService{
 		}
 		
 		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(ResponseCurrentAddReceiver.ACTION_RESP);
+		broadcastIntent.setAction(ResponseCurrentAddReceiver.ACTION_COMM_ADD_RESP);
 		sendBroadcast(broadcastIntent);
 		
 		stopSelf();

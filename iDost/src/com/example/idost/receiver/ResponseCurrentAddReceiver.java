@@ -9,8 +9,8 @@ import com.example.idost.service.CurrentAddressService;
 
 public class ResponseCurrentAddReceiver extends BroadcastReceiver{
 
+	public static final String ACTION_COMM_ADD_RESP = "com.example.idost.service.CURRADDRESPONSE";
 	public static Button msgBtn;
-	public static String ACTION_RESP = "com.example.idost.service.CURRADDRESPONSE";
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
