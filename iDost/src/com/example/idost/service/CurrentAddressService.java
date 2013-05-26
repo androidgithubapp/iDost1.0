@@ -10,7 +10,6 @@ import com.example.idost.util.AppReflectUtilityClass;
 public class CurrentAddressService extends IntentService{
 
 	public static boolean isExceptionOccured;
-	public static boolean fireSMSService = false;
 	
 	public CurrentAddressService() {
 		super("CurAddPolAddiDostService");

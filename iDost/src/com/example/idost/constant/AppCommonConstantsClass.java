@@ -25,4 +25,37 @@ public class AppCommonConstantsClass {
 	public static String NET_GPS_NOT_ENABLED =  "netOrGpsEnable";
 	
 	
+	public static int SEARCH_PLC_DIST = 5000;
+	public static int INCR_PLC_DIST = 5000;
+	
+	public static String ALL_POL_URL = "https://maps.googleapis.com/maps/api/place/search/json?";
+	
+	public static String URL_LOC = "&location=";
+	public static String URL_RAD = "&radius=";
+	public static String URL_RANK = "&rankBy=distance";
+	public static String URL_TYPES = "&types=";
+	public static String URL_SENSOR = "&sensor=true";
+	public static String URl_KEY = "&key=";
+	
+	public static String JSON_RESULTS = "results";
+	
+	public static String ALL_POL_ATTR_ICON = "icon";
+	public static String ALL_POL_ATTR_NM = "name";
+	public static String ALL_POL_ATTR_VICINITY = "vicinity";
+	public static String ALL_POL_ATTR_ID = "id";
+	public static String ALL_POL_ATTR_REF = "reference";
+	
+	public static String GET_URL_UTL_CLS = "com.example.idost.util.GetUrlUtilityClass";
+	public static String GET_URL_UTL_MTH = "getUrlConnContents";
+	public static String GET_URL_MTH = "getUrl";
+	
+	
+	public static String NEAR_POL_CLS = "com.example.idost.NearestPoliceStationInfoClass";
+	public static String NEAR_POL_MTH = "findNearPoliceStationInfo";
+	
+	
+	
+	
+	
+	
 }
