@@ -29,7 +29,7 @@ public class MessagingService extends IntentService {
 		String msgContent = AppCommonConstantsClass.MSG_CONT1;
 		if(CurrentAddressBean.curraddressLine !=null)
 		{
-			msgContent = msgContent+AppCommonConstantsClass.MSG_CONT2+CurrentAddressBean.curraddressLine + "," +  CurrentAddressBean.locality; ;
+			msgContent = msgContent+AppCommonConstantsClass.MSG_CONT2+CurrentAddressBean.curraddressLine ;
 		}
 				
 		

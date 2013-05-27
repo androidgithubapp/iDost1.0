@@ -156,7 +156,9 @@ public class MainActivity extends Activity{
   			}
 	        
 	        AppCommonBean.msgBtnClicked = true;
-	    	
+	        GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
+    		GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
+    		
 	        
 	    }
 

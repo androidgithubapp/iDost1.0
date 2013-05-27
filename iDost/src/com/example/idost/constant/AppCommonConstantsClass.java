@@ -32,6 +32,7 @@ public class AppCommonConstantsClass {
 	
 	public static String ALL_POL_URL = "https://maps.googleapis.com/maps/api/place/search/json?";
 	public static String NEAR_POL_URL = "https://maps.googleapis.com/maps/api/place/details/json?";
+	public static String CURR_ADDR_URL = "http://maps.google.com/maps/api/geocode/json?latlng=";
 	public static String URL_LOC = "&location=";
 	public static String URL_RAD = "&radius=";
 	public static String URL_RANK = "&rankBy=distance";
@@ -55,6 +56,8 @@ public class AppCommonConstantsClass {
 	public static String NEAR_POL_ATTR_INPHNO =	"international_phone_number";
 	public static String NEAR_POL_ATTR_PHNO	= "formatted_phone_number";
 	public static String NEAR_POL_ATTR_VICINITY = "vicinity";
+	
+	public static String CURR_ADDR_FORMT= "formatted_address";
 	
 	
 	public static String CONCT_DEL_MSG = "Please Select a Contact To Delete";

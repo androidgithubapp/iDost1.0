@@ -1,14 +1,20 @@
 package com.example.idost;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import android.location.Address;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.location.Geocoder;
 
 import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.AppCommonBean;
 import com.example.idost.pojo.CurrentAddressBean;
 import com.example.idost.util.AppCommonExceptionClass;
+import com.example.idost.util.AppReflectUtilityClass;
+import com.example.idost.util.GetUrlUtilityClass;
 
 public class GetCurrentAddrLocClass {
 
@@ -23,7 +29,7 @@ public class GetCurrentAddrLocClass {
 
 			if (geocoder != null) {
 
-				List<Address> addresses = geocoder.getFromLocation(latitude,longitude, 1);
+				/*List<Address> addresses = geocoder.getFromLocation(latitude,longitude, 1);
 
 				if (addresses != null && addresses.size() > 0 && addresses.get(0).getAddressLine(0) != null) {
 						CurrentAddressBean.curraddressLine = addresses.get(0).getAddressLine(0);
@@ -36,13 +42,81 @@ public class GetCurrentAddrLocClass {
 				} else {
 					AppCommonBean.commonErrMsg = AppCommonConstantsClass.CURR_ADDR;
 					throw new Exception(AppCommonConstantsClass.ADDR_NULL);
-				}
-
+				}*/
+				
+				
+				this.getLocFrmUrl(latitude,longitude);
 			}
-		} catch (Exception e) {
+			
+		} 
+		catch (Exception e) {
 			throw new AppCommonExceptionClass(AppCommonBean.mContext, e);
 		}
 
 	}
+	
+	private void getLocFrmUrl(double latitude, double longitude) throws AppCommonExceptionClass
+	{
+		try {
+    		String urlString = this.makeUrl(latitude, longitude);
+    		
+    		AppReflectUtilityClass.invokeMethod(AppCommonConstantsClass.GET_URL_UTL_CLS,AppCommonConstantsClass.GET_URL_UTL_MTH,new Class[] {String.class}, new Object[] {urlString});
+            String currAddrInfo = GetUrlUtilityClass.urlContent;
+
+            JSONObject jsonObj = new JSONObject(currAddrInfo);
+            JSONArray jsonObjArr = jsonObj.getJSONArray(AppCommonConstantsClass.JSON_RESULTS);
+            if(jsonObjArr!= null && jsonObjArr.length()>0)
+            {
+            	this.jsonToAllPoliceRefBean((JSONObject) jsonObjArr.get(0));
+            }
+    		
+
+		} catch (JSONException ex) {
+        	throw new AppCommonExceptionClass(AppCommonBean.mContext, ex);
+        }catch(Exception e)
+        {
+        	throw new AppCommonExceptionClass(AppCommonBean.mContext, e);
+        }
+    	
+	}
+	
+	private String makeUrl(double latitude, double longitude) throws AppCommonExceptionClass {
+    	String retUrl= null;
+    	try{
+		    	String url = AppCommonConstantsClass.CURR_ADDR_URL+Double.toString(latitude)+","+Double.toString(longitude);
+		    	
+		    	ArrayList<String> params = new ArrayList<String>();
+		    	params.add(AppCommonConstantsClass.URL_SENSOR);
+		    	
+		    	AppReflectUtilityClass.invokeMethod(AppCommonConstantsClass.GET_URL_UTL_CLS, AppCommonConstantsClass.GET_URL_MTH,new Class[] {ArrayList.class,String.class}, new Object[] {params, url});
+		    	retUrl = GetUrlUtilityClass.urlStr;
+		    	
+    	}catch(Exception e){
+    		throw new AppCommonExceptionClass(AppCommonBean.mContext, e);
+    	}
+    	
+    	return retUrl;
+	}
+	
+	 private void jsonToAllPoliceRefBean(JSONObject jsonObj) throws AppCommonExceptionClass {
+	        try {
+	        	
+	        	Iterator<?> iter = jsonObj.keys();
+	        	 while(iter.hasNext()){	            
+	        	String jsonkey = (String)iter.next();
+	            String value = jsonObj.getString(jsonkey);
+		            if(jsonkey.equalsIgnoreCase(AppCommonConstantsClass.CURR_ADDR_FORMT))
+		            {
+		            	CurrentAddressBean.curraddressLine = value;
+		            	break;
+		            }
+		         }
+	        	
+	        
+	        } catch (JSONException ex) {
+	        	throw new AppCommonExceptionClass(AppCommonBean.mContext, ex);
+	        }
+	    }
+
 
 }
