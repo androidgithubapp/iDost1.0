@@ -11,6 +11,7 @@ public class AppCommonConstantsClass {
 	public static String ADDR_NULL = "address is null";
 	public static String CNTC_ADD = "Contact added successfully";
 	public static String CNTC_EXIST="Contact already exits";
+	public static String LOC_CHNG="location has been changed";
 	
 	public static String COMMON_ERR_MSG = "iDost has encountered an error Pls try after some time";
 	

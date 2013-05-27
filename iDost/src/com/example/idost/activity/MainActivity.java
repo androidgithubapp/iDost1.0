@@ -142,10 +142,10 @@ public class MainActivity extends Activity{
 			super.onDestroy();
 				
 			
-			this.unregisterReceiver(policeReceiver);
-	        this.unregisterReceiver(currAddreceiver);
-	        this.unregisterReceiver(smsdeliverreceiver);
-	        this.unregisterReceiver(smssendreceiver);
+			unregisterReceiver(policeReceiver);
+	        unregisterReceiver(currAddreceiver);
+	        unregisterReceiver(smsdeliverreceiver);
+	        unregisterReceiver(smssendreceiver);
 	        
 
 	        try {

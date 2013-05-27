@@ -143,7 +143,7 @@ public class GetLocationClass extends Service{
 					AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
 					if(prevaddressLine != null && !prevaddressLine.equalsIgnoreCase(CurrentAddressBean.curraddressLine))
 					{
-						Toast.makeText(AppCommonBean.mContext, "location has been changed", Toast.LENGTH_SHORT).show();
+						Toast.makeText(AppCommonBean.mContext, AppCommonConstantsClass.LOC_CHNG, Toast.LENGTH_SHORT).show();
 						location = loc;
 		      	   	    AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
 			      	   if(AppCommonBean.msgBtnClicked)
@@ -192,7 +192,7 @@ public class GetLocationClass extends Service{
 					if(prevaddressLine != null && !prevaddressLine.equalsIgnoreCase(CurrentAddressBean.curraddressLine))
 					{
 						location = loc;
-						Toast.makeText(AppCommonBean.mContext, "location has been changed", Toast.LENGTH_SHORT).show();
+						Toast.makeText(AppCommonBean.mContext,AppCommonConstantsClass.LOC_CHNG, Toast.LENGTH_SHORT).show();
 						
 		      	   	    AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
 			      	   if(AppCommonBean.msgBtnClicked)
