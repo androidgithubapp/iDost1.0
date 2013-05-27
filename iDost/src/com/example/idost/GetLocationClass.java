@@ -21,6 +21,8 @@ public class GetLocationClass extends Service{
 	
 	public static LocationManager locationManager = null;
 	public static Location location;
+	//private long minTime = 30 * 60 * 1000;
+	private long minTime = 0;
 	
 
 	public void getLocation() throws AppCommonExceptionClass {
@@ -81,7 +83,7 @@ public class GetLocationClass extends Service{
 
 		// get the location from network provider
 		if (isNetworkEnabled) {
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,(10 * 60 * 1000), 0,networkLocationListener);
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime, 0,networkLocationListener);
 			location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		} else {
 			AppCommonBean.commonErrMsg = AppCommonConstantsClass.LOC_PROVIDER_NULL;
@@ -104,7 +106,7 @@ public class GetLocationClass extends Service{
 
 		// get the location from GPS provider
 		if (isGPSEnabled) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, (10 * 60 * 1000), 0, gpsLocationListener);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, 0, gpsLocationListener);
 			location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 			if (location == null) {
 				this.getNetworkProvider();
@@ -142,6 +144,7 @@ public class GetLocationClass extends Service{
 					AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
 					if(prevaddressLine != null && !prevaddressLine.equalsIgnoreCase(CurrentAddressBean.curraddressLine))
 					{
+						Toast.makeText(AppCommonBean.mContext, "location has been changed", Toast.LENGTH_SHORT).show();
 						location = loc;
 		      	   	    AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
 			      	   if(AppCommonBean.msgBtnClicked)
@@ -190,6 +193,8 @@ public class GetLocationClass extends Service{
 					if(prevaddressLine != null && !prevaddressLine.equalsIgnoreCase(CurrentAddressBean.curraddressLine))
 					{
 						location = loc;
+						Toast.makeText(AppCommonBean.mContext, "location has been changed", Toast.LENGTH_SHORT).show();
+						
 		      	   	    AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.POL_ADD_SERVICE);
 			      	   if(AppCommonBean.msgBtnClicked)
 				   		{

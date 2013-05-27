@@ -140,10 +140,7 @@ public class MainActivity extends Activity{
 		@Override
 	    protected void onDestroy() {
 			super.onDestroy();
-			 AppCommonBean.msgBtnClicked = true;
-	    	 GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
-	    	 GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
-	    		
+				
 			
 			this.unregisterReceiver(policeReceiver);
 	        this.unregisterReceiver(currAddreceiver);
@@ -158,7 +155,8 @@ public class MainActivity extends Activity{
 				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
   			}
 	        
-	       
+	        AppCommonBean.msgBtnClicked = true;
+	    	
 	        
 	    }
 
@@ -235,7 +233,7 @@ public class MainActivity extends Activity{
     		startActivity(new Intent(MainActivity.this,ContactActivity.class));
     		return true;
     	case R.id.stop_sms_service:
-    		AppCommonBean.msgBtnClicked = true;
+    		AppCommonBean.msgBtnClicked = false;
     		GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
     		GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
     		return true;
