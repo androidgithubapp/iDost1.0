@@ -12,5 +12,15 @@
     <string name="title_activity_contact">ContactActivity</string>
     <string name="CallPolice">Call Police</string>
     <string name="SendSMS">Send SMS</string>
+    <string name="aboutApp">YELFP is an app developed to help people in distress. It enables people to call out for help just with a click of a button. All one has to do is add five of their closest people to our contact list. An SOS will be sent to them with current location updates. The app will also help people to place a call to the Police Station nearest to their current location.</string>
+    <string name="title_activity_app_info">AppInfoActivity</string>
+    <string name="title_activity_about_us">AboutUsActivity</string>
+    <string name="menu4">About The App</string>
+    <string name="aboutUs">		
+        Developed By :
+        Joydeep Mitra , 
+        Neeldeep Roy ,
+     	Jaydeep Chakraborty 
+    </string>
 
 </resources>

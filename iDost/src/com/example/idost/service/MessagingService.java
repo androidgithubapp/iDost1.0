@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.telephony.SmsManager;
 
+import com.example.idost.GetLocationClass;
 import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.AppCommonBean;
 import com.example.idost.pojo.ContactBean;
@@ -30,6 +31,8 @@ public class MessagingService extends IntentService {
 		if(CurrentAddressBean.curraddressLine !=null)
 		{
 			msgContent = msgContent+AppCommonConstantsClass.MSG_CONT2+CurrentAddressBean.curraddressLine ;
+			msgContent = msgContent + "\n " + AppCommonConstantsClass.GOOGLE_MAPS_URL + GetLocationClass.location.getLatitude()+","+GetLocationClass.location.getLongitude(); 
+
 		}
 				
 		

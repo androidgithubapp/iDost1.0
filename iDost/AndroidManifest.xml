@@ -37,9 +37,20 @@
             android:label="@string/title_activity_contact" >
         </activity>
         
+         <activity
+            android:name="com.example.idost.activity.AppInfoActivity"
+            android:label="@string/title_activity_app_info" >
+        </activity>
+        <activity
+            android:name="com.example.idost.activity.AboutUsActivity"
+            android:label="@string/title_activity_app_info" >
+        </activity>
+        
         <service android:name="com.example.idost.service.CurrentAddressService" />
         <service android:name="com.example.idost.service.PoliceAddService" />
         <service android:name="com.example.idost.service.MessagingService" />
     </application>
+    
+   
 
 </manifest>

@@ -1,8 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/button"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="#FFF"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -10,23 +11,32 @@
     tools:context=".MainActivity" >
 
     <Button
-        android:id="@+id/btnCall"
-        style="@drawable/button_focused"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnSMS"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="115dp"
-        android:text="@string/CallPolice" />
-
-    <Button
         android:id="@+id/btnSMS"
-        style="@drawable/button_focused"
+        style="@style/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btnCall"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="142dp"
+        android:layout_marginBottom="84dp"
         android:text="@string/SendSMS" />
+
+    <Button
+        android:id="@+id/btnCall"
+        style="@style/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSMS"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="68dp"
+        android:text="@string/CallPolice" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnCall"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/txt_img1" />
 
 </RelativeLayout>

@@ -57,13 +57,13 @@ public class MainActivity extends Activity{
        
        Button buttonSms = (Button)findViewById(R.id.btnSMS);
        ResponseCurrentAddReceiver.msgBtn = buttonSms;
-       buttonSms.setText("Service is loading");
+       buttonSms.setText(AppCommonConstantsClass.FETCH_CURR_ADDR);
        buttonSms.setEnabled(false);
        buttonSms.setOnClickListener(startSmsListener);
        
        Button buttonPhone = (Button)findViewById(R.id.btnCall);
        ResponsePoliceInfoReceiver.callPlcBtn = buttonPhone;
-       buttonPhone.setText("Service is loading");
+       buttonPhone.setText(AppCommonConstantsClass.FETCH_POL_INF);
        buttonPhone.setEnabled(false);
        buttonPhone.setOnClickListener(startCallListener);
        
@@ -239,6 +239,9 @@ public class MainActivity extends Activity{
     		GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
     		GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
     		return true;
+    	case R.id.about_app:
+    		startActivity(new Intent(MainActivity.this,AboutUsActivity.class));
+    		return true;
     	default:
     		return false;
     	}
@@ -260,24 +263,33 @@ public class MainActivity extends Activity{
                 	if(cr!= null)
                 	{
                 		Cursor cur=cr.query(contactData, null, null, null, null);
-                    	while(cur.moveToNext())
-                    	{
-                    		String cid=cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                    		String name = cur.getString(cur.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-                    		if(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)))>0)
-                    		{
-                    			Cursor pcur=cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ cid,null, null);
-                    			 while (pcur.moveToNext())
-                    			 {
-                    				 String phoneNumber= pcur.getString(pcur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    				 PreferUtilityClass.StoreContact(MainActivity.this, name, phoneNumber);
-                    			 }
-                    		}
-                    		else
-                    		{
-                    			ContactBean.showMsg=AppCommonConstantsClass.CONCT_ADD_ERR;
-                    		}
-                    	}
+                		
+                	if(ContactBean.ContactMap.size()<5)
+                		{
+                			
+                			while(cur.moveToNext())
+                        	{
+                        		String cid=cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                        		String name = cur.getString(cur.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                        		if(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)))>0)
+                        		{
+                        			Cursor pcur=cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ cid,null, null);
+                        			while (pcur.moveToNext())
+                        			 {
+                        				 String phoneNumber= pcur.getString(pcur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        				 PreferUtilityClass.StoreContact(MainActivity.this, name, phoneNumber);
+                        			 }
+                        		}
+                        		else
+                        		{
+                        			ContactBean.showMsg=AppCommonConstantsClass.CONCT_ADD_ERR;
+                        		}
+                        	}
+                        	
+                			
+                		}else{
+                			ContactBean.showMsg=AppCommonConstantsClass.CONT_CANT_ADD;
+                		}
                     	Toast.makeText(AppCommonBean.mContext, ContactBean.showMsg, Toast.LENGTH_LONG).show();
                 		
                 	}else

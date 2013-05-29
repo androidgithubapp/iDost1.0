@@ -12,6 +12,8 @@ public class AppCommonConstantsClass {
 	public static String CNTC_ADD = "Contact added successfully";
 	public static String CNTC_EXIST="Contact already exits";
 	public static String LOC_CHNG="location has been changed";
+	public static String FETCH_POL_INF = "Fetching Police Information...";
+	public static String FETCH_CURR_ADDR = "Fetching ur current Location...";
 	
 	public static String COMMON_ERR_MSG = "iDost has encountered an error Pls try after some time";
 	
@@ -34,6 +36,7 @@ public class AppCommonConstantsClass {
 	public static String ALL_POL_URL = "https://maps.googleapis.com/maps/api/place/search/json?";
 	public static String NEAR_POL_URL = "https://maps.googleapis.com/maps/api/place/details/json?";
 	public static String CURR_ADDR_URL = "http://maps.google.com/maps/api/geocode/json?latlng=";
+	public static String GOOGLE_MAPS_URL = "http://maps.google.co.in/maps?q=";
 	public static String URL_LOC = "&location=";
 	public static String URL_RAD = "&radius=";
 	public static String URL_RANK = "&rankBy=distance";
@@ -64,6 +67,7 @@ public class AppCommonConstantsClass {
 	public static String CONCT_DEL_MSG = "Please Select a Contact To Delete";
 	public static String NO_CONCT_ADDED ="No Contact Added Yet!";
 	public static String CONCT_ADD_ERR = "Cannot Add Contact!";
+	public static String CONT_CANT_ADD = "Cannot add more Contact";
 	
 	public static String POL_CALL_ERR_MSG = "Extremely Sorry! the information is not available yet. Please try after a few seconds";
 	public static String POL_CALL_TEL = "tel:";
