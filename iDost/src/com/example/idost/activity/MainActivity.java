@@ -228,8 +228,14 @@ public class MainActivity extends Activity{
     	switch(item.getItemId()){
     	
     	case R.id.item_add_contact:
+    		if(ContactBean.ContactMap != null && ContactBean.ContactMap.size()<5)
+    		{
     		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
     		startActivityForResult(intent,PICK_CONTACT);
+    		}else{
+    			ContactBean.showMsg=AppCommonConstantsClass.CONT_CANT_ADD;
+    			Toast.makeText(AppCommonBean.mContext, ContactBean.showMsg, Toast.LENGTH_LONG).show();
+    		}
     		return true;
     	case R.id.item_show_contact:
     		startActivity(new Intent(MainActivity.this,ContactActivity.class));
@@ -264,9 +270,6 @@ public class MainActivity extends Activity{
                 	{
                 		Cursor cur=cr.query(contactData, null, null, null, null);
                 		
-                	if(ContactBean.ContactMap.size()<5)
-                		{
-                			
                 			while(cur.moveToNext())
                         	{
                         		String cid=cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
@@ -285,11 +288,7 @@ public class MainActivity extends Activity{
                         			ContactBean.showMsg=AppCommonConstantsClass.CONCT_ADD_ERR;
                         		}
                         	}
-                        	
-                			
-                		}else{
-                			ContactBean.showMsg=AppCommonConstantsClass.CONT_CANT_ADD;
-                		}
+                		
                     	Toast.makeText(AppCommonBean.mContext, ContactBean.showMsg, Toast.LENGTH_LONG).show();
                 		
                 	}else

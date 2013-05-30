@@ -10,13 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AppInfoActivity" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/txt_img1" />
-
-    <EditText
+      <EditText
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

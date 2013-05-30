@@ -24,6 +24,7 @@ public class PoliceAddService extends IntentService{
 	
 	@Override
 	protected void onHandleIntent(Intent intent) {
+		isPoliceExceptionOccured = false;
 		
 		try{
 			AppReflectUtilityClass.invokeMethod(AppCommonConstantsClass.ALL_POL_CLS, AppCommonConstantsClass.ALL_POL_MTH,new Class[] {Double.TYPE,Double.TYPE,String.class}, new Object[] {GetLocationClass.location.getLatitude(),GetLocationClass.location.getLongitude(),"police"});

@@ -43,7 +43,7 @@
         </activity>
         <activity
             android:name="com.example.idost.activity.AboutUsActivity"
-            android:label="@string/title_activity_app_info" >
+            android:label="@string/title_activity_about_us" >
         </activity>
         
         <service android:name="com.example.idost.service.CurrentAddressService" />

@@ -3,12 +3,13 @@ package com.example.idost.constant;
 public class AppCommonConstantsClass {
 	
 	public static String LOC_MNG_NULL = "location manager is null";
-	public static String USR_LOC_MNG_NULL = "location not available";
+	public static String USR_LOC_MNG_NULL = "location not available, check ur data settings or restart the phone and try again";
 	public static String LOC_PROVIDER_NULL = "location provider is null";
 	public static String LOC_NET_PROVIDER_NULL = "network provider is null";
 	public static String LOC_GPS_PROVIDER_NULL = "gps provider is null";
 	public static String LOC_NULL = "location is null";
 	public static String ADDR_NULL = "address is null";
+	
 	public static String CNTC_ADD = "Contact added successfully";
 	public static String CNTC_EXIST="Contact already exits";
 	public static String LOC_CHNG="location has been changed";
@@ -81,7 +82,7 @@ public class AppCommonConstantsClass {
 	public static String SMS_SERV_NOT_AVAIL =  "could not send the message due to unavailability of service.";
 	public static String SMS_NO_PDU = "Null PDU";
 	public static String SMS_NOT_SENT = "Message could not be sent";
-	public static String SERVICE_EXP= "Exception in Service";
+	public static String SERVICE_EXP= "Location is not available yet, try after some time";
 	
 	public static String ALERT_SETTING = "Settings";
 	public static String ALERT_CANCEL ="Cancel";
