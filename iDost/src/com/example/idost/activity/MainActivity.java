@@ -170,16 +170,22 @@ public class MainActivity extends Activity{
 	private OnClickListener startSmsListener = new OnClickListener() {
 		public void onClick(View v)
 		{
-			AppCommonBean.msgBtnClicked = true;
 			
-			try{
+			if(ContactBean.ContactMap!=null && ContactBean.ContactMap.size()>0)
+			{
+				AppCommonBean.msgBtnClicked = true;
+				
+				try{
 
-				AppCallServiceUtilityClass.getService(MainActivity.this, AppCommonConstantsClass.MSG_SERVICE);
-				}
-				catch(Exception e)
-				{
-					Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
-	  			}
+					AppCallServiceUtilityClass.getService(MainActivity.this, AppCommonConstantsClass.MSG_SERVICE);
+					}
+					catch(Exception e)
+					{
+						Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
+		  			}
+			}else{
+				Toast.makeText(AppCommonBean.mContext, AppCommonConstantsClass.NO_CONCT_ADDED, Toast.LENGTH_SHORT).show();
+			}
 		}
 	};
 
