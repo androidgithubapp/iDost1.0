@@ -19,7 +19,7 @@
 
     <Button
         android:id="@+id/btnDelete"
-        style="@drawable/button"
+        style="@xml/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

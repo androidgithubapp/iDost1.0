@@ -18,7 +18,7 @@
         android:layout_alignLeft="@+id/btnCall"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="84dp"
-        android:text="@string/SendSMS" />
+        android:text="@string/SendSMS"/>
 
     <Button
         android:id="@+id/btnCall"

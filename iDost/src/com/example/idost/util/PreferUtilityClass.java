@@ -9,12 +9,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-import com.example.idost.R;
+
 import com.example.idost.constant.AppCommonConstantsClass;
 import com.example.idost.pojo.AppCommonBean;
 import com.example.idost.pojo.ContactBean;
 
-public class PreferUtilityClass {SharedPreferences shrpref;
+public class PreferUtilityClass {
+	SharedPreferences shrpref;
 
 public static void StoreContact(Context context, String name,String Phone) throws AppCommonExceptionClass 
 {
@@ -28,11 +29,11 @@ public static void StoreContact(Context context, String name,String Phone) throw
 		Editor edit = prefs.edit();
 		String phndata = getData(context);
 		if (phndata==null) {
-			edit.putString(context.getString(R.string.CONVAL),
+			edit.putString(AppCommonConstantsClass.CONTACT_VAL,
 					name + ":" + Phone + ";");
 		} else 
 		{
-			edit.putString(context.getString(R.string.CONVAL), phndata
+			edit.putString(AppCommonConstantsClass.CONTACT_VAL, phndata
 					+ name + ":" + Phone + ";");
 			
 			
@@ -61,10 +62,10 @@ public static void UpdateContact(Context context, ContactBean conobj) throws App
 	String phndata=getData(context);
 	if(phndata==null)
 	{
-		edit.putString(context.getString(R.string.CONVAL),conobj.getName()+":"+conobj.getPhn());
+		edit.putString(AppCommonConstantsClass.CONTACT_VAL,conobj.getName()+":"+conobj.getPhn());
 	}
 	else
-	edit.putString(context.getString(R.string.CONVAL),phndata+";"+conobj.getName()+":"+conobj.getPhn());
+	edit.putString(AppCommonConstantsClass.CONTACT_VAL,phndata+";"+conobj.getName()+":"+conobj.getPhn());
 	edit.commit();
 	}catch(Exception e)
 	{
@@ -78,7 +79,7 @@ public static void UpdateContactDetails(Context context) throws AppCommonExcepti
 	try{
 	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	Editor edit = prefs.edit();
-	edit.putString(context.getString(R.string.CONVAL),StoreContactData(GetContactListFromMap()));
+	edit.putString(AppCommonConstantsClass.CONTACT_VAL,StoreContactData(GetContactListFromMap()));
 	edit.commit();
 	}catch(Exception e)
 	{
@@ -121,7 +122,7 @@ public static String GetContact(Context context) throws AppCommonExceptionClass 
 	try{
 	SharedPreferences prefs = PreferenceManager
 			.getDefaultSharedPreferences(context);
-	return prefs.getString(context.getString(R.string.CONVAL), "");
+	return prefs.getString(AppCommonConstantsClass.CONTACT_VAL, "");
 	}catch(Exception e)
 	{
 		throw new AppCommonExceptionClass(context, e);
@@ -132,7 +133,7 @@ public static String getData(Context context) throws AppCommonExceptionClass
 {
 	try{
 	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-	String data = prefs.getString(context.getString(R.string.CONVAL), null);
+	String data = prefs.getString(AppCommonConstantsClass.CONTACT_VAL, null);
 	
 	if(data==null)
 		return null;
@@ -149,7 +150,7 @@ public static void delData(Context context) throws AppCommonExceptionClass
 	try{
 	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	Editor edit = prefs.edit();
-	edit.putString(context.getString(R.string.CONVAL),null);
+	edit.putString(AppCommonConstantsClass.CONTACT_VAL,null);
 	edit.commit();
 	}catch(Exception e)
 	{
