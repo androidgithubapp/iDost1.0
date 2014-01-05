@@ -21,8 +21,8 @@ public class GetLocationClass extends Service{
 	
 	public static LocationManager locationManager = null;
 	public static Location location;
-	private long minTime = 30 * 60 * 1000;
-	
+//	private long minTime = 30 * 60 * 1000;
+	private long minTime = 0;
 
 	public void getLocation() throws AppCommonExceptionClass {
 		try {

@@ -4,7 +4,8 @@ import java.util.HashMap;
 
 
 public class ContactBean 
-{private String Name;
+{
+private String Name;
 private String Phn;
 
 public ContactBean(String name,String phn)
