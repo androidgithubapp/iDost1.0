@@ -4,7 +4,6 @@ package com.example.idost.activity;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.idost.GetCurrentAddrLocClass;
 import com.example.idost.GetLocationClass;
 import com.example.idost.R;
 import com.example.idost.constant.AppCommonConstantsClass;
@@ -25,8 +23,6 @@ import com.example.idost.pojo.ContactBean;
 import com.example.idost.pojo.NearestPoliceInfoBean;
 import com.example.idost.receiver.ResponseCurrentAddReceiver;
 import com.example.idost.receiver.ResponsePoliceInfoReceiver;
-import com.example.idost.receiver.SmsDeliverIdostReceiver;
-import com.example.idost.receiver.SmsSendIdostReceiver;
 import com.example.idost.util.AppCallServiceUtilityClass;
 import com.example.idost.util.AppCommonExceptionClass;
 import com.example.idost.util.AppReflectUtilityClass;
@@ -38,18 +34,8 @@ import com.example.idost.util.ShowAlertUtilityClass;
 public class MainActivity extends Activity{
 
     
-	private ResponseCurrentAddReceiver currAddreceiver;
-	private ResponsePoliceInfoReceiver policeReceiver;
-	private SmsSendIdostReceiver smssendreceiver;
-	private SmsDeliverIdostReceiver smsdeliverreceiver;
-	
-	
 	private static final int PICK_CONTACT =1;
-    GetCurrentAddrLocClass mGetCurrentAddress;
-    boolean mBounded;
-    Intent mIntent;
-    //private TextView viewObj;
-
+   
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,29 +60,8 @@ public class MainActivity extends Activity{
 	
 	  protected void onStart() {
 	    	super.onStart();
-	    	 currAddreceiver = new ResponseCurrentAddReceiver();
-	         IntentFilter intFltrCurrAdd = new IntentFilter();
-	         intFltrCurrAdd.addAction(ResponseCurrentAddReceiver.ACTION_COMM_ADD_RESP);
-	         registerReceiver(currAddreceiver,intFltrCurrAdd);
-	         
-	         policeReceiver = new ResponsePoliceInfoReceiver();
-	         IntentFilter intFltrPolice = new IntentFilter();
-	         intFltrPolice.addAction(ResponsePoliceInfoReceiver.ACTION_POL_ADD_RESP);
-	         registerReceiver(policeReceiver,intFltrPolice);
-	        
-	    	
-	         
-	         smssendreceiver = new SmsSendIdostReceiver();
-	         IntentFilter intFltrSmsSend = new IntentFilter(SmsSendIdostReceiver.SMS_SEND_RESP);
-	         registerReceiver(smssendreceiver,intFltrSmsSend);
-
-	         smsdeliverreceiver = new SmsDeliverIdostReceiver();
-	         IntentFilter intFltrSmsDelivered = new IntentFilter(SmsDeliverIdostReceiver.SMS_DELIVER_RESP);
-	         registerReceiver(smsdeliverreceiver,intFltrSmsDelivered);
-
-
-	    	
-	    	 try {
+	    	 
+	     	 try {
 	      	   
 	    		 AppCommonBean.mContext = MainActivity.this; 
 	    		 PreferUtilityClass.PopulateMap(AppCommonBean.mContext);
@@ -140,14 +105,7 @@ public class MainActivity extends Activity{
 		@Override
 	    protected void onDestroy() {
 			super.onDestroy();
-				
-			
-			unregisterReceiver(policeReceiver);
-	        unregisterReceiver(currAddreceiver);
-	        unregisterReceiver(smsdeliverreceiver);
-	        unregisterReceiver(smssendreceiver);
-	        
-
+	
 	        try {
 				AppCallServiceUtilityClass.stopService(MainActivity.this);
 			} catch (AppCommonExceptionClass e) {

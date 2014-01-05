@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.telephony.SmsManager;
 
 import com.example.idost.GetLocationClass;
@@ -17,9 +18,25 @@ import com.example.idost.receiver.SmsSendIdostReceiver;
 
 public class MessagingService extends IntentService {
 
+	private SmsSendIdostReceiver smssendreceiver;
+	private SmsDeliverIdostReceiver smsdeliverreceiver;
 	
 	public MessagingService() {
 		super("MessagingService");
+	}
+	
+	@Override
+	  public void onCreate() {
+	    super.onCreate();
+	    
+	 smssendreceiver = new SmsSendIdostReceiver();
+     IntentFilter intFltrSmsSend = new IntentFilter(SmsSendIdostReceiver.SMS_SEND_RESP);
+     registerReceiver(smssendreceiver,intFltrSmsSend);
+
+     smsdeliverreceiver = new SmsDeliverIdostReceiver();
+     IntentFilter intFltrSmsDelivered = new IntentFilter(SmsDeliverIdostReceiver.SMS_DELIVER_RESP);
+     registerReceiver(smsdeliverreceiver,intFltrSmsDelivered);
+
 	}
 	
 	@Override
@@ -72,6 +89,9 @@ public class MessagingService extends IntentService {
 	@Override
 	  public void onDestroy() {
 	    super.onDestroy();
+        unregisterReceiver(smsdeliverreceiver);
+        unregisterReceiver(smssendreceiver);
+  
 	  }
 
 }

@@ -2,6 +2,7 @@ package com.example.idost.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 import com.example.idost.GetLocationClass;
 import com.example.idost.constant.AppCommonConstantsClass;
@@ -11,6 +12,7 @@ import com.example.idost.util.AppReflectUtilityClass;
 public class PoliceAddService extends IntentService{
 
 	public static boolean isPoliceExceptionOccured;
+	private ResponsePoliceInfoReceiver policeReceiver;
 	
 	public PoliceAddService() {
 		super("PoliceAddService");
@@ -19,6 +21,11 @@ public class PoliceAddService extends IntentService{
 	@Override
 	  public void onCreate() {
 	    super.onCreate();
+	    policeReceiver = new ResponsePoliceInfoReceiver();
+        IntentFilter intFltrPolice = new IntentFilter();
+        intFltrPolice.addAction(ResponsePoliceInfoReceiver.ACTION_POL_ADD_RESP);
+        registerReceiver(policeReceiver,intFltrPolice);
+       
 	  }
 	
 	
@@ -46,6 +53,7 @@ public class PoliceAddService extends IntentService{
 	@Override
 	  public void onDestroy() {
 	    super.onDestroy();
+	    unregisterReceiver(policeReceiver);
 	  }
 
 }

@@ -30,7 +30,7 @@ public class ContactActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.contact);
+		setContentView(R.layout.activity_contact);
 		this.txtvw=(TextView)findViewById(R.id.txtViewContact);
 		
 		btndel=(Button)findViewById(R.id.btnDelete);
