@@ -3,6 +3,7 @@ package com.example.idost.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.widget.Button;
 
 import com.example.idost.constant.AppCommonConstantsClass;
@@ -18,6 +19,12 @@ public class ResponsePoliceInfoReceiver extends BroadcastReceiver{
 				if(!PoliceAddService.isPoliceExceptionOccured)
 				{
 					callPlcBtn.setText(AppCommonConstantsClass.CALL_POL);
+					AnimationDrawable callBtnLeft = (AnimationDrawable)callPlcBtn.getCompoundDrawables()[0];
+					if(callBtnLeft != null)
+					{
+						callBtnLeft.stop();
+					}
+					callPlcBtn.setCompoundDrawablesWithIntrinsicBounds( 0, 0, 0, 0);
 					callPlcBtn.setEnabled(true);
 				}
 				else{

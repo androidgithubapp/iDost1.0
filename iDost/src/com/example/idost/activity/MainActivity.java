@@ -9,11 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import android.graphics.drawable.AnimationDrawable;
 
 import com.example.idost.GetLocationClass;
 import com.example.idost.R;
@@ -34,26 +34,39 @@ import com.example.idost.util.ShowAlertUtilityClass;
 public class MainActivity extends Activity{
 
     
-	private static final int PICK_CONTACT =1;
-   
+
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       
+      try{ 
        Button buttonSms = (Button)findViewById(R.id.btnSMS);
        ResponseCurrentAddReceiver.msgBtn = buttonSms;
        buttonSms.setText(AppCommonConstantsClass.FETCH_CURR_ADDR);
        buttonSms.setEnabled(false);
        buttonSms.setOnClickListener(startSmsListener);
+       buttonSms.setCompoundDrawablesWithIntrinsicBounds(R.drawable.button_anim, 0, 0, 0);
+       ((AnimationDrawable)buttonSms.getCompoundDrawables()[0]).start();
        
        Button buttonPhone = (Button)findViewById(R.id.btnCall);
        ResponsePoliceInfoReceiver.callPlcBtn = buttonPhone;
        buttonPhone.setText(AppCommonConstantsClass.FETCH_POL_INF);
        buttonPhone.setEnabled(false);
        buttonPhone.setOnClickListener(startCallListener);
+       buttonPhone.setCompoundDrawablesWithIntrinsicBounds(R.drawable.button_anim, 0, 0, 0);
+       ((AnimationDrawable)buttonPhone.getCompoundDrawables()[0]).start();
        
+      
        
+       Button buttonMore = (Button)findViewById(R.id.btnMore);
+       buttonMore.setText("More");
+       buttonMore.setOnClickListener(startModalMenuListener);
+       
+      }catch(Exception e)
+      {
+    	  Toast.makeText(AppCommonBean.mContext, AppCommonConstantsClass.COMMON_ERR_MSG, Toast.LENGTH_SHORT).show();
+      }
     }
 
 	//@Override
@@ -116,7 +129,6 @@ public class MainActivity extends Activity{
 	        AppCommonBean.msgBtnClicked = true;
 	        GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
     		GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
-    		
 	        
 	    }
 
@@ -179,46 +191,25 @@ public class MainActivity extends Activity{
 	};
 		
 
+	/**
+	 * code to manage main menu list
+	 */
+	private OnClickListener startModalMenuListener = new OnClickListener() {
+
+		public void onClick(View v)
+		{
+			ShowAlertUtilityClass.showMenu(getResources().getStringArray(R.array.main_menu_list_arr));
+		}
+			
+	};
 	
-	
+	   
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+		super.onCreateOptionsMenu(menu);
+	    return true;
     }
-    
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-    	switch(item.getItemId()){
-    	
-    	case R.id.item_add_contact:
-    		if(ContactBean.ContactMap != null && ContactBean.ContactMap.size()<5)
-    		{
-    		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-    		startActivityForResult(intent,PICK_CONTACT);
-    		}else{
-    			ContactBean.showMsg=AppCommonConstantsClass.CONT_CANT_ADD;
-    			Toast.makeText(AppCommonBean.mContext, ContactBean.showMsg, Toast.LENGTH_LONG).show();
-    		}
-    		return true;
-    	case R.id.item_show_contact:
-    		startActivity(new Intent(MainActivity.this,ContactActivity.class));
-    		return true;
-    	case R.id.stop_sms_service:
-    		AppCommonBean.msgBtnClicked = false;
-    		GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
-    		GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
-    		return true;
-    	case R.id.about_app:
-    		startActivity(new Intent(MainActivity.this,AboutUsActivity.class));
-    		return true;
-    	default:
-    		return false;
-    	}
-    }
-
-
-    
+	
     /* (non-Javadoc)
 	 * stores the contacts in Preference
 	 */

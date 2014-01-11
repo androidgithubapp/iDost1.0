@@ -1,10 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/item_add_contact"
-        android:title="@string/menu1">
-    </item>
-    <item
+    <!-- <item
         android:id="@+id/item_show_contact"
         android:title="@string/menu2">
     </item>
@@ -14,5 +10,5 @@
     </item>
     <item 
         android:id="@+id/about_app" 
-        android:title="@string/menu4"></item>
+        android:title="@string/menu4"></item> -->
 </menu>

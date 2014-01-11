@@ -16,7 +16,7 @@ public interface AppCommonConstantsClass {
 	String FETCH_POL_INF = "Fetching Police Information...";
 	String FETCH_CURR_ADDR = "Fetching ur current Location...";
 	
-	String COMMON_ERR_MSG = "iDost has encountered an error Pls try after some time";
+	String COMMON_ERR_MSG = "Yell for Help for has encountered an error Pls try after some time";
 	
 	String CURR_ADDR = "Current add is not available";
 	

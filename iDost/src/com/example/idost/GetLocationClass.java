@@ -80,6 +80,7 @@ public class GetLocationClass extends Service{
 		// getting network status
 		isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
+		isNetworkEnabled = false;
 		// get the location from network provider
 		if (isNetworkEnabled) {
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime, 0,networkLocationListener);
