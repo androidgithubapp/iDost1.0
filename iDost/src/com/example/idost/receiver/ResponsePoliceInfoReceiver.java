@@ -29,6 +29,7 @@ public class ResponsePoliceInfoReceiver extends BroadcastReceiver{
 				}
 				else{
 					callPlcBtn.setText(AppCommonConstantsClass.SERVICE_EXP);
+					callPlcBtn.setCompoundDrawablesWithIntrinsicBounds( 0, 0, 0, 0);
 					callPlcBtn.setEnabled(false);
 				}
 	}

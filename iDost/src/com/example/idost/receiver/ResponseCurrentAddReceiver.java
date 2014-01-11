@@ -28,6 +28,7 @@ public class ResponseCurrentAddReceiver extends BroadcastReceiver{
 		}
 		else{
 			msgBtn.setText(AppCommonConstantsClass.SERVICE_EXP);
+			msgBtn.setCompoundDrawablesWithIntrinsicBounds( 0, 0, 0, 0);
 			msgBtn.setEnabled(false);
 		}
 		

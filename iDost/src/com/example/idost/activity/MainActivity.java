@@ -34,8 +34,6 @@ import com.example.idost.util.ShowAlertUtilityClass;
 public class MainActivity extends Activity{
 
     
-
-	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

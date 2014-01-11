@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AppInfoActivity" >
 
-      <EditText
+   <!--    <EditText
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,7 +21,7 @@
         android:text="@string/aboutApp" >
 
         
-    </EditText>
+    </EditText> -->
 
 
 </RelativeLayout>
