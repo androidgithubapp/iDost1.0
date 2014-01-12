@@ -86,10 +86,11 @@ public class MainActivity extends Activity{
 	      	   	   
 	         	}catch(Exception e)
 	  			{
-	  				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
 	  				if(AppCommonBean.commonErrMsg.equalsIgnoreCase(AppCommonConstantsClass.LOC_PROVIDER_NULL))
 	  				{
 	  					ShowAlertUtilityClass.showSettingsAlert(AppCommonConstantsClass.NET_GPS_NOT_ENABLED);
+	  				}else{
+	  					Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
 	  				}
 	  			}
 	    	 
