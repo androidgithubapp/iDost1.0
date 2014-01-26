@@ -31,7 +31,8 @@
        </activity>
         <activity
             android:name="com.example.idost.activity.ContactActivity" 
-            android:screenOrientation="portrait"
+            android:screenOrientation="portrait" 
+            android:theme="@style/AppTheme" 
             android:label="@string/title_activity_contact" 
             android:parentActivityName="com.example.idost.activity.MainActivity">
             <meta-data
@@ -42,6 +43,7 @@
          <activity
             android:name="com.example.idost.activity.AppInfoActivity"
             android:label="@string/title_activity_app_info" 
+            android:theme="@style/AppTheme" 
             android:parentActivityName="com.example.idost.activity.MainActivity">
             <meta-data
             android:name="android.support.PARENT_ACTIVITY"
@@ -50,6 +52,7 @@
         <activity
             android:name="com.example.idost.activity.AboutUsActivity"
             android:label="@string/title_activity_about_us" 
+            android:theme="@style/AppTheme" 
             android:parentActivityName="com.example.idost.activity.MainActivity">
             <meta-data
             android:name="android.support.PARENT_ACTIVITY"

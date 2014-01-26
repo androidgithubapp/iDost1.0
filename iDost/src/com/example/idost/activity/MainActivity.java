@@ -11,6 +11,7 @@ import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 import android.graphics.drawable.AnimationDrawable;
@@ -37,7 +38,10 @@ public class MainActivity extends Activity{
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+       
+        
       try{ 
        Button buttonSms = (Button)findViewById(R.id.btnSMS);
        ResponseCurrentAddReceiver.msgBtn = buttonSms;
@@ -117,7 +121,7 @@ public class MainActivity extends Activity{
 		@Override
 	    protected void onDestroy() {
 			super.onDestroy();
-	
+						
 	        try {
 				AppCallServiceUtilityClass.stopService(MainActivity.this);
 			} catch (AppCommonExceptionClass e) {
@@ -125,7 +129,7 @@ public class MainActivity extends Activity{
 				Toast.makeText(AppCommonBean.mContext, AppCommonBean.commonErrMsg, Toast.LENGTH_SHORT).show();
   			}
 	        
-	        AppCommonBean.msgBtnClicked = true;
+	        AppCommonBean.msgBtnClicked = false;
 	        GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
     		GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
 	        

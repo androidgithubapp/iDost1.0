@@ -88,6 +88,7 @@ public static void showMenu(String[] dropdownMenuValues)
    	    		AppCommonBean.msgBtnClicked = false;
    	    		GetLocationClass.locationManager.removeUpdates(GetLocationClass.networkLocationListener);
    	    		GetLocationClass.locationManager.removeUpdates(GetLocationClass.gpsLocationListener);
+   	    		Toast.makeText(AppCommonBean.mContext, "SMS is stopped", Toast.LENGTH_LONG).show();
    	    		break;
    	    	case 3://About the App
    	    		dialog.cancel();
@@ -102,5 +103,43 @@ public static void showMenu(String[] dropdownMenuValues)
 });
 	menualertDialog.show();
 }
+
+/*
+
+public static void exitAppAlert(){
+	AlertDialog.Builder alertDialog = null;
+	
+	
+		alertDialog = new AlertDialog.Builder(AppCommonBean.mContext);
+		 
+        // Setting Dialog Title
+        alertDialog.setTitle("Alert");
+ 
+        // Setting Dialog Message
+        alertDialog.setMessage("Do you wanna Exit ?");
+ 
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Return", new DialogInterface.OnClickListener() {
+        	
+            public void onClick(DialogInterface dialog,int which) {
+                AppCommonBean.mContext.startActivity(intent);
+            }
+            
+        });
+	
+ 	 // on pressing cancel button
+    alertDialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+        dialog.cancel();
+        ((Activity) AppCommonBean.mContext).finish();
+        }
+    });
+
+	
+	
+// Showing Alert Message
+alertDialog.show();
+}*/
+
 
 }

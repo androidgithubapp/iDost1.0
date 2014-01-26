@@ -10,4 +10,6 @@
 <color name="mintcream">#cccccc</color>
 <color name="lightChocolate">#DD761C</color>
 <color name="lightBlue">#438eb9</color>
+<color name="black">#000000</color>
+<color name="white">#ffffff</color>
 </resources>

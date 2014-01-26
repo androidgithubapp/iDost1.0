@@ -21,8 +21,9 @@ public class GetLocationClass extends Service{
 	
 	public static LocationManager locationManager = null;
 	public static Location location;
-//	private long minTime = 30 * 60 * 1000;
-	private long minTime = 0;
+	private long minDist = 0;
+//	private long minTime = 30 * 60 * 1000;//30 min
+	private long minTime = 1 * 60 * 1000;
 
 	public void getLocation() throws AppCommonExceptionClass {
 		try {
@@ -82,7 +83,7 @@ public class GetLocationClass extends Service{
 
 		// get the location from network provider
 		if (isNetworkEnabled) {
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime, 0,networkLocationListener);
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,minTime, minDist,networkLocationListener);
 			location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		} else {
 			AppCommonBean.commonErrMsg = AppCommonConstantsClass.LOC_PROVIDER_NULL;
@@ -105,7 +106,7 @@ public class GetLocationClass extends Service{
 
 		// get the location from GPS provider
 		if (isGPSEnabled) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, 0, gpsLocationListener);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDist, gpsLocationListener);
 			location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 			if (location == null) {
 				this.getNetworkProvider();
@@ -183,12 +184,18 @@ public class GetLocationClass extends Service{
 		@Override
 		public void onLocationChanged(Location loc) {
 			
+			
 			if(loc!= null && location!=null)
 			{
 				
 				try {
 			    	String prevaddressLine = CurrentAddressBean.curraddressLine;
 					AppCallServiceUtilityClass.getService(AppCommonBean.mContext, AppCommonConstantsClass.CURR_ADD_SERVICE);
+					
+					Toast.makeText(AppCommonBean.mContext,"curr add - "+CurrentAddressBean.curraddressLine, Toast.LENGTH_SHORT).show();
+					Toast.makeText(AppCommonBean.mContext,"prev add - "+prevaddressLine, Toast.LENGTH_SHORT).show();
+					Toast.makeText(AppCommonBean.mContext,"msg btn - "+AppCommonBean.msgBtnClicked, Toast.LENGTH_SHORT).show();
+					
 					if(prevaddressLine != null && !prevaddressLine.equalsIgnoreCase(CurrentAddressBean.curraddressLine))
 					{
 						location = loc;
